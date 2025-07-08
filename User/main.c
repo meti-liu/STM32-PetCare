@@ -54,6 +54,7 @@ int main()
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);  // 中断优先级分组 组2
 	LED_Init();
 	KEY_Init();
+	RGB_LED_Init();
 	USART1_Init(115200);
 	TFTLCD_Init();			// LCD初始化
 	BEEP_Init();			// 蜂鸣器初始化
