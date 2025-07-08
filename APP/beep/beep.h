@@ -2,6 +2,7 @@
 #define _beep_H
 
 #include "system.h"
+#include "usart3.h"
 
 /*  蜂鸣器时钟端口、引脚定义 */
 #define BEEP_PORT 			GPIOB   
