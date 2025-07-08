@@ -1,5 +1,5 @@
 #include "beep.h"
-
+#include "stdio.h"
 
 /*******************************************************************************
 * 函 数 名         : BEEP_Init
@@ -70,6 +70,16 @@ void music_sample(void)                             //音乐演奏
     for(i = 0; i < MUSIC_LEN; i++)
     {
         beep_play_one_beat(tone[music[i]]);
-        delay_us(BEAT_TIME/50);                     //短停顿
+        delay_us(BEAT_TIME/50);
+		if(USART3_RX_STA&0X8000)		// 接收到一条数据
+		{	
+			u8 reclen;
+ 			reclen=USART3_RX_STA&0X7FFF;	// 得到数据长度
+		  	USART3_RX_BUF[reclen]='\0';	 	// 添加结束符
+			if(strcmp("+stop music\r\n",(char *)USART3_RX_BUF)==0){
+				return;
+			}
+ 			USART3_RX_STA=0;	 
+		}                  //短停顿
     }
 }
