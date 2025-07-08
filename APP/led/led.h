@@ -9,12 +9,12 @@
 #define LED1_PORT_RCC		RCC_APB2Periph_GPIOB
 
 #define LED2_PORT 			GPIOE   
-#define LED2_PIN 			GPIO_Pin_6
+#define LED2_PIN 			GPIO_Pin_5
 #define LED2_PORT_RCC		RCC_APB2Periph_GPIOE
 
 
 #define LED1 PBout(5)  	
-#define LED2 PEout(6)  	
+#define LED2 PEout(5)  	
 
 
 void LED_Init(void);

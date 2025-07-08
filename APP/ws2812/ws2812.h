@@ -4,7 +4,7 @@
 #include "system.h"
 
 
-#define RGB_LED 		GPIO_Pin_5
+#define RGB_LED 		GPIO_Pin_6
 #define	RGB_LED_HIGH	(GPIO_SetBits(GPIOE,RGB_LED))
 #define RGB_LED_LOW		(GPIO_ResetBits(GPIOE,RGB_LED))
 
@@ -30,4 +30,5 @@ void RGB_DrawLine_Color(u16 x1, u16 y1, u16 x2, u16 y2,u32 color);
 void RGB_DrawRectangle(u16 x1, u16 y1, u16 x2, u16 y2,u32 color);
 void RGB_Draw_Circle(u16 x0,u16 y0,u8 r,u32 color);
 void RGB_ShowCharNum(u8 num,u32 color);
+void clean_databuf(void);
 #endif

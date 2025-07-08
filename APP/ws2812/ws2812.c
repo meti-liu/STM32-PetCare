@@ -22,17 +22,29 @@ const u8 g_rgb_num_buf[][5]=
 {0xF8,0xA8,0xA8,0xA8,0x00},//E
 {0x00,0xF8,0xA0,0xA0,0x00},//F
 };
+void clean_databuf(){
+	uint8_t i=0;
+	for(i=0;i<3;i++){
+		uint8_t j=0;
+		for(j=0;j<RGB_LED_XWIDTH;j++){
+			uint8_t k=0;
+			for(k=0;k<RGB_LED_YHIGH;k++){
+				g_rgb_databuf[i][j][k] = 0;
+			}
 
+		}
+	}
+}
 void RGB_LED_Init(void)
 {
 	GPIO_InitTypeDef  GPIO_InitStructure;
  	
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOE, ENABLE);	 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;				 
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;				 
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;		
 	GPIO_Init(GPIOE, &GPIO_InitStructure);					
-	GPIO_SetBits(GPIOE,GPIO_Pin_5);		
+	GPIO_SetBits(GPIOE,GPIO_Pin_6);		
 	
 	RGB_LED_Clear();
 }
@@ -142,6 +154,7 @@ void RGB_LED_Clear(void)
 	for(i=0;i<25;i++)
 		RGB_LED_Write_24Bits(0,0,0);
 	RGB_LED_Reset();
+	//clean_databuf();
 	delay_ms(10);
 }
 
