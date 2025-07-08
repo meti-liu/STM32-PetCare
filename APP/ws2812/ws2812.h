@@ -17,6 +17,8 @@
 #define RGB_COLOR_BLUE		0X0000FF
 #define RGB_COLOR_WHITE		0XFFFFFF
 #define RGB_COLOR_YELLOW	0XFFFF00
+#define RGB_COLOR_PINK   0xFF69B4  // RGB(255, 105, 180)
+
 
 void RGB_LED_Init(void);
 void RGB_LED_Reset(void);

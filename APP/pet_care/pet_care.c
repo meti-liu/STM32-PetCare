@@ -244,10 +244,10 @@ void PetCare_Set_Light(u8 status)
 			  u8 i,j;
         if(pet_care_data.light_value < 20)
             color = RGB_COLOR_BLUE;
-        else if(pet_care_data.light_value < 40)
-            color = RGB_COLOR_GREEN;
+        else if(pet_care_data.light_value < 30)
+            color = RGB_COLOR_PINK;
         else
-            color = RGB_COLOR_WHITE;
+            color = RGB_COLOR_GREEN;
 				
         /*for(i = 0; i < RGB_LED_YHIGH; i++)
         {
@@ -258,7 +258,26 @@ void PetCare_Set_Light(u8 status)
             }
         }	*/	
 
-					RGB_DrawDotColor(2, 2, 1, color);
+				RGB_DrawDotColor(1, 0, 1, color);
+        RGB_DrawDotColor(3, 0, 1, color);
+        
+        RGB_DrawDotColor(0, 1, 1, color);
+        RGB_DrawDotColor(1, 1, 1, color);
+        RGB_DrawDotColor(2, 1, 1, color);
+        RGB_DrawDotColor(3, 1, 1, color);
+        RGB_DrawDotColor(4, 1, 1, color);
+        
+        RGB_DrawDotColor(0, 2, 1, color);
+        RGB_DrawDotColor(1, 2, 1, color);
+        RGB_DrawDotColor(2, 2, 1, color);
+        RGB_DrawDotColor(3, 2, 1, color);
+        RGB_DrawDotColor(4, 2, 1, color);
+        
+        RGB_DrawDotColor(1, 3, 1, color);
+        RGB_DrawDotColor(2, 3, 1, color);
+        RGB_DrawDotColor(3, 3, 1, color);
+        
+        RGB_DrawDotColor(2, 4, 1, color);
 	
 
         pet_care_data.light_status = DEVICE_ON;
