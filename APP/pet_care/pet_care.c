@@ -234,27 +234,7 @@ void PetCare_Set_Fan(u8 status)
  * @brief 设置照明状�?
  * @param status: DEVICE_ON/DEVICE_OFF
  */
-/*void PetCare_Set_Light(u8 status)
-{
-    if(status == DEVICE_ON)
-    {
-        // 开启白色照�?
-        u8 i, j;
-        for(i=0; i<RGB_LED_YHIGH; i++)
-        {
-            for(j=0; j<RGB_LED_XWIDTH; j++)
-            {
-                RGB_LED_Write_24Bits(255, 255, 255); // 白色 (RGB全亮)
-            }
-        }
-        pet_care_data.light_status = DEVICE_ON;
-    }
-    else
-    {
-        RGB_LED_Clear(); // 关闭照明
-        pet_care_data.light_status = DEVICE_OFF;
-    }
-}*/
+
 
 void PetCare_Set_Light(u8 status)
 {
@@ -269,15 +249,17 @@ void PetCare_Set_Light(u8 status)
         else
             color = RGB_COLOR_WHITE;
 				
-        for(i = 0; i < RGB_LED_YHIGH; i++)
+        /*for(i = 0; i < RGB_LED_YHIGH; i++)
         {
             for(j = 0; j < RGB_LED_XWIDTH; j++)
             {
-                RGB_LED_Write_24Bits((color >> 16) & 0xFF,  // Green
-                                     (color >> 8)  & 0xFF,  // Red
-                                     (color)       & 0xFF); // Blue
+                
+                RGB_DrawDotColor(j, i, 1, color); 
             }
-        }
+        }	*/	
+
+					RGB_DrawDotColor(2, 2, 1, color);
+	
 
         pet_care_data.light_status = DEVICE_ON;
     }
