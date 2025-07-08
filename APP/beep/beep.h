@@ -10,6 +10,10 @@
 
 #define BEEP PBout(8)
 
+#define BEAT_FREQ   2               //节拍频率
+#define BEAT_TIME   1000000/2       //节拍周期 us
+
 void BEEP_Init(void);
+void music_sample(void); 
 
 #endif
