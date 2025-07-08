@@ -19,7 +19,7 @@
 #define TEMP_WARNING_LOW     15.0  // 温度警告下限
 #define TEMP_ALARM_LOW       10.0  // 温度报警下限
 
-#define LIGHT_WARNING_LOW    50    // 光照警告下限
+#define LIGHT_WARNING_LOW    30    // 光照警告下限
 #define LIGHT_ALARM_LOW      15    // 光照报警下限
 
 // 设备控制状态定义

@@ -2,44 +2,35 @@
 #include "SysTick.h"
 
 /*******************************************************************************
-* О©╫О©╫ О©╫О©╫ О©╫О©╫         : KEY_Init
-* О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫		   : О©╫О©╫О©╫О©╫О©╫О©╫й╪О©╫О©╫
-* О©╫О©╫    О©╫О©╫         : О©╫О©╫
-* О©╫О©╫    О©╫О©╫         : О©╫О©╫
+* ╨╞ йЩ цШ         : KEY_Init
+* ╨╞йЩ╧╕дэ		   : ╟╢╪ЭЁУй╪╩╞
+* йД    хК         : нч
+* йД    ЁЖ         : нч
 *******************************************************************************/
 void KEY_Init(void)
 {
-	GPIO_InitTypeDef GPIO_InitStructure; //О©╫О©╫О©╫О©╫А╧╧О©╫О©╫О©╫О©╫О©╫	
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_GPIOE,ENABLE);
-	
-	GPIO_InitStructure.GPIO_Pin=KEY_UP_PIN;	   //я║О©╫О©╫О©╫О©╫р╙О©╫О©╫О©╫ц╣О©╫IOО©╫О©╫
-	GPIO_InitStructure.GPIO_Mode=GPIO_Mode_IPD;//О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫  
-	GPIO_Init(KEY_UP_PORT,&GPIO_InitStructure);		  /* О©╫О©╫й╪О©╫О©╫GPIO */
-	
-	GPIO_InitStructure.GPIO_Pin=KEY0_PIN|KEY1_PIN|KEY2_PIN;
-	GPIO_InitStructure.GPIO_Mode=GPIO_Mode_IPU;	//О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
-	GPIO_Init(KEY_PORT,&GPIO_InitStructure);
+
 }
 
 /*******************************************************************************
-* О©╫О©╫ О©╫О©╫ О©╫О©╫         : KEY_Scan
-* О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫		   : О©╫О©╫О©╫О©╫и╗О©╫О©╫О©╫О©╫
-* О©╫О©╫    О©╫О©╫         : mode=0:О©╫О©╫О©╫н╟О©╫О©╫б╟О©╫О©╫О©╫
-					 mode=1О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫б╟О©╫О©╫О©╫
-* О©╫О©╫    О©╫О©╫         : 0О©╫О©╫н╢О©╫п╟О©╫О©╫О©╫О©╫О©╫О©╫О©╫
-					 KEY_UP_PRESSО©╫О©╫KEY_UPО©╫О©╫О©╫О©╫О©╫О©╫
-					 KEY0_PRESSО©╫О©╫KEY0О©╫О©╫О©╫О©╫О©╫О©╫
-					 KEY1_PRESSО©╫О©╫KEY1О©╫О©╫О©╫О©╫О©╫О©╫
+* ╨╞ йЩ цШ         : KEY_Scan
+* ╨╞йЩ╧╕дэ		   : ╟╢╪Эи╗цХ╪Л╡Б
+* йД    хК         : mode=0:╣╔╢н╟╢об╟╢╪Э
+					 mode=1ё╨а╛пЬ╟╢об╟╢╪Э
+* йД    ЁЖ         : 0ё╨н╢сп╟╢╪Э╟╢об
+					 KEY_UP_PRESSё╨KEY_UP╪Э╟╢об
+					 KEY0_PRESSё╨KEY0╪Э╟╢об
+					 KEY1_PRESSё╨KEY1╪Э╟╢об
 *******************************************************************************/
 u8 KEY_Scan(u8 mode)
 {
 	static u8 key=1;
 	
-	if(mode==1) //Ф■╞Ф▄│Х©·Ф▄┴
+	if(mode==1) //а╛пЬ╟╢╪Э╟╢об
 		key=1;
-	if(key==1&&(KEY_UP==1||KEY0==0||KEY1==0||KEY2==0)) //Ф°┴Ф▄┴И■╝Ф▄┴Д╦▀
+	if(key==1&&(KEY_UP==1||KEY0==0||KEY1==0)) //хнрБр╩╦Ж╟╢╪Э╟╢об
 	{
-		delay_ms(10);  //Е▌╩Ф┼√
+		delay_ms(10);  //оШ╤╤
 		key=0;
 		if(KEY_UP==1)
 			return KEY_UP_PRESS; 
@@ -47,10 +38,8 @@ u8 KEY_Scan(u8 mode)
 			return KEY0_PRESS; 
 		else if(KEY1==0)
 			return KEY1_PRESS; 
-		else if(KEY2==0)
-			return KEY2_PRESS; 
 	}
-	else if(KEY_UP==0&&KEY0==1&&KEY1==1&&KEY2==1)    //Ф≈═Ф▄┴И■╝Ф▄┴Д╦▀
+	else if(KEY_UP==0&&KEY0==1&&KEY1==1)    //нч╟╢╪Э╟╢об
 		key=1;
 	return 0;
 }
