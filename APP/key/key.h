@@ -4,22 +4,25 @@
 
 #include "system.h"
  
-#define KEY0_PIN   			GPIO_Pin_4    	//¶¨ÒåKEY0¹Ü½Å
-#define KEY1_PIN    		GPIO_Pin_3    	//¶¨ÒåKEY1¹Ü½Å
-#define KEY_UP_PIN  		GPIO_Pin_0  	//¶¨ÒåKEY_UP¹Ü½Å
+#define KEY0_PIN   			GPIO_Pin_4    	//å®šä¹‰KEY0å¼•è„š
+#define KEY1_PIN    		GPIO_Pin_3    	//å®šä¹‰KEY1å¼•è„š
+#define KEY2_PIN    		GPIO_Pin_2    	//å®šä¹‰KEY2å¼•è„š
+#define KEY_UP_PIN  		GPIO_Pin_0  	//å®šä¹‰KEY_UPå¼•è„š
 
-#define KEY_PORT 			GPIOE 		//¶¨Òå¶Ë¿Ú
-#define KEY_UP_PORT 		GPIOA 		//¶¨Òå¶Ë¿Ú
+#define KEY_PORT 			GPIOE 		//å®šä¹‰ç«¯å£
+#define KEY_UP_PORT 		GPIOA 		//å®šä¹‰ç«¯å£
 
-//Ê¹ÓÃÎ»²Ù×÷¶¨Òå
+//ä½¿ç”¨ä½å¸¦æ“ä½œå®šä¹‰
 #define KEY_UP 	PAin(0)
 #define KEY0 	PEin(4)
 #define KEY1 	PEin(3)
+#define KEY2 	PEin(2)
 
-//¶¨Òå¸÷¸ö°´¼üÖµ  
+//æŒ‰é”®è¿”å›å€¼å®šä¹‰  
 #define KEY_UP_PRESS 	1
 #define KEY0_PRESS		2
 #define KEY1_PRESS		3
+#define KEY2_PRESS		4
  
 void KEY_Init(void);
 u8 KEY_Scan(u8 mode);
