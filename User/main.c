@@ -16,31 +16,32 @@
 
 	
 
-//???HC05??????????
+// ä¸éœ€è¦å•ç‹¬æ˜¾ç¤ºè“ç‰™è§’è‰²å’ŒçŠ¶æ€ï¼Œå·²åœ¨ PetCare_Display_Page ä¸­æ˜¾ç¤º
+/*
 void HC05_Role_Show(void)
 {
 	if(HC05_Get_Role()==1)
 	{
-		LCD_ShowString(10,140,200,16,16,"ROLE:Master");	//????
+		LCD_ShowString(10,140,200,16,16,"ROLE:Master");	// ä¸»æœº
 	}
 	else 
 	{
-		LCD_ShowString(10,140,200,16,16,"ROLE:Slave ");	//???
+		LCD_ShowString(10,140,200,16,16,"ROLE:Slave ");	// ä»Žæœº
 	}
 }
 
-//???HC05??????????
 void HC05_Sta_Show(void)
 {												 
 	if(HC05_LED)
 	{
-		LCD_ShowString(110,140,120,16,16,"STA:Connected ");	//??????
+		LCD_ShowString(110,140,120,16,16,"STA:Connected ");	// è¿žæŽ¥æˆåŠŸ
 	}
 	else 
 	{
-		LCD_ShowString(110,140,120,16,16,"STA:Disconnect");	 			//¦Ä????
+		LCD_ShowString(110,140,120,16,16,"STA:Disconnect");	// æœªè¿žæŽ¥
 	}				 
 }
+*/
 
 
 int main()
@@ -49,25 +50,25 @@ int main()
 	u8 key;
 	u8 reclen=0; 
 	
-	// ÏµÍ³³õÊ¼»¯
+	// ÏµÍ³ï¿½ï¿½Ê¼ï¿½ï¿½
 	SysTick_Init(72);
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);  // ÖÐ¶ÏÓÅÏÈ¼¶·Ö×é ×é2
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);  // ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½È¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½2
 	LED_Init();
 	KEY_Init();
 	//RGB_LED_Init();
 	USART1_Init(115200);
-	TFTLCD_Init();			// LCD³õÊ¼»¯
-	BEEP_Init();			// ·äÃùÆ÷³õÊ¼»¯
-	TIM3_CH3_PWM_Init(100, 7200-1); // ·çÉÈPWM³õÊ¼»¯
+	TFTLCD_Init();			// LCDï¿½ï¿½Ê¼ï¿½ï¿½
+	BEEP_Init();			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
+	TIM3_CH3_PWM_Init(100, 7200-1); // ï¿½ï¿½ï¿½ï¿½PWMï¿½ï¿½Ê¼ï¿½ï¿½
 	
-	// ÏÔÊ¾»¶Ó­½çÃæ
+	// ï¿½ï¿½Ê¾ï¿½ï¿½Ó­ï¿½ï¿½ï¿½ï¿½
 	FRONT_COLOR=RED;
 	LCD_ShowString(10,10,tftlcd_data.width,tftlcd_data.height,16,"Pet Care System");
 	LCD_ShowString(10,30,tftlcd_data.width,tftlcd_data.height,16,"Smart Pet Guardian");
-	delay_ms(1000);			// µÈ´ýÀ¶ÑÀÄ£¿éÉÏµçÎÈ¶¨
+	delay_ms(1000);			// ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½Ïµï¿½ï¿½È¶ï¿½
 	
-	// ³õÊ¼»¯À¶ÑÀÄ£¿é
-	while(HC05_Init()) 		// ³õÊ¼»¯HC05Ä£¿é  
+	// ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
+	while(HC05_Init()) 		// ï¿½ï¿½Ê¼ï¿½ï¿½HC05Ä£ï¿½ï¿½  
 	{
 		printf("HC05 Error!\r\n");
 		LCD_ShowString(10,90,200,16,16,"HC05 Error!    "); 
@@ -77,34 +78,34 @@ int main()
 	}
 	printf("HC05 OK!\r\n");
 	
-	// ÐÞ¸ÄÀ¶ÑÀÄ£¿éÃû³Æ
+	// ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	//HC05_Set_Cmd("AT+NAME=PetCare");
-	//HC05_Set_Cmd("AT+RESET"); // ÖØÖÃÀ¶ÑÀÄ£¿éÊ¹Ãû³ÆÉúÐ§
+	//HC05_Set_Cmd("AT+RESET"); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§
 	//delay_ms(200);
 	
-	// ÇåÆÁ²¢ÏÔÊ¾²Ù×÷ÌáÊ¾
+	// æ¸…å±å‡†å¤‡æ˜¾ç¤º
 	LCD_Clear(WHITE);
-	FRONT_COLOR=RED;
-	LCD_ShowString(10,10,tftlcd_data.width,tftlcd_data.height,16,"Pet Care System");
-	LCD_ShowString(10,30,tftlcd_data.width,tftlcd_data.height,16,"Smart Pet Guardian");
 	
-	// ÏÔÊ¾À¶ÑÀ×´Ì¬
+	// ä¸éœ€è¦å•ç‹¬æ˜¾ç¤ºè“ç‰™è§’è‰²å’ŒçŠ¶æ€ï¼Œå°†åœ¨ PetCare_Display_Page ä¸­æ˜¾ç¤º
 	FRONT_COLOR=BLUE;
-	HC05_Role_Show();
-	HC05_Sta_Show();
 	
-	// ³õÊ¼»¯³èÎïÕÕ»¤ÏµÍ³
+	// ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ»ï¿½ÏµÍ³
 	PetCare_Init();
 	
-	// ÏÔÊ¾³õÊ¼Êý¾Ý
+	// ï¿½ï¿½Ê¾ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
 	PetCare_Display_Data();
 	
 	USART3_RX_STA=0;
  	while(1) 
 	{		
-		// °´¼ü´¦Àí
+		// æŒ‰é”®æ‰«æ
 		key=KEY_Scan(0);
-		if(key==KEY_UP_PRESS)		// ÇÐ»»×Ô¶¯¿ØÖÆÄ£Ê½
+		if(key==KEY0_PRESS)		// KEY0æŒ‰ä¸‹ï¼Œåˆ‡æ¢é¡µé¢
+		{
+			PetCare_Switch_Page();
+			printf("Page switched\r\n");
+		}
+		else if(key==KEY_UP_PRESS)	// åˆ‡æ¢è‡ªåŠ¨æŽ§åˆ¶æ¨¡å¼
 		{
 			if(pet_care_data.auto_control == DEVICE_ON)
 			{
@@ -117,7 +118,7 @@ int main()
 				printf("Auto control turned ON\r\n");
 			}
 		}
-		else if(key==KEY1_PRESS)	// ÊÖ¶¯¿ØÖÆ·çÉÈ
+		else if(key==KEY1_PRESS)	// æ‰‹åŠ¨æŽ§åˆ¶é£Žæ‰‡
 		{
 			if(pet_care_data.fan_status == DEVICE_ON)
 			{
@@ -126,44 +127,38 @@ int main()
 			}
 			else
 			{
-				PetCare_Set_Auto_Control(DEVICE_OFF); // ¹Ø±Õ×Ô¶¯¿ØÖÆ
+				PetCare_Set_Auto_Control(DEVICE_OFF); // å…³é—­è‡ªåŠ¨æŽ§åˆ¶
 				PetCare_Set_Fan(DEVICE_ON);
 				printf("Fan turned ON\r\n");
 			}
 		}
 		
-		// ¶¨Ê±ÈÎÎñ
-		if(t >= 50) // Ô¼500ms
+		// å®šæ—¶ä»»åŠ¡
+		if(t >= 50) // çº¦500ms
 		{
-			// ¸üÐÂ»·¾³Êý¾Ý
+			// æ›´æ–°çŽ¯å¢ƒæ•°æ®
 			PetCare_Update_Data();
 			
-			// ×Ô¶¯¿ØÖÆ
+			// è‡ªåŠ¨æŽ§åˆ¶
 			PetCare_Auto_Control();
 			
-			// ¸üÐÂÏÔÊ¾
-			PetCare_Display_Data();
-			
-			// ÏÔÊ¾À¶ÑÀ×´Ì¬
-			HC05_Sta_Show();
-			
-			// LEDÖ¸Ê¾µÆÉÁË¸
+			// LEDæŒ‡ç¤ºç¯é—ªçƒ
 			LED1=!LED1;
 			
 			t=0;
 		}
 		
-		// À¶ÑÀÃüÁî´¦Àí
-		if(USART3_RX_STA&0X8000)		// ½ÓÊÕµ½Ò»ÌõÊý¾Ý
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î´¦ï¿½ï¿½
+		if(USART3_RX_STA&0X8000)		// ï¿½ï¿½ï¿½Õµï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		{
- 			reclen=USART3_RX_STA&0X7FFF;	// µÃµ½Êý¾Ý³¤¶È
-		  	USART3_RX_BUF[reclen]='\0';	 	// Ìí¼Ó½áÊø·û
+ 			reclen=USART3_RX_STA&0X7FFF;	// ï¿½Ãµï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½
+		  	USART3_RX_BUF[reclen]='\0';	 	// ï¿½ï¿½ï¿½Ó½ï¿½ï¿½ï¿½ï¿½ï¿½
 			printf("Received: %s\r\n", USART3_RX_BUF);
 			
-			// ´¦ÀíÀ¶ÑÀÃüÁî
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			PetCare_Process_Command((char*)USART3_RX_BUF);
 			
-			// ¸üÐÂÏÔÊ¾
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
 			PetCare_Display_Data();
 			
  			USART3_RX_STA=0;	 
