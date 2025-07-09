@@ -188,6 +188,10 @@ void RGB_DrawDotColor(u8 x,u8 y,u8 status,u32 color)
 	}
 }
 
+
+
+
+
 void RGB_DrawLine_Color(u16 x1, u16 y1, u16 x2, u16 y2,u32 color)
 {
 	u16 t; 
