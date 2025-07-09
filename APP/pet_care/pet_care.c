@@ -3,12 +3,13 @@
 #include "tftlcd.h"
 #include "usart.h"
 #include "string.h"
+#include "doro2.h"
 
 // 全局变量定义
 PetCare_TypeDef pet_care_data;
 
 /**
- * @brief 初始化宠物照护系�?
+ * @brief 初始化宠物照护系�??
  */
 void PetCare_Init(void)
 {
@@ -31,7 +32,7 @@ void PetCare_Init(void)
     RGB_LED_Init();
     RGB_LED_Clear();
     
-    // 初始化系统参�?
+    // 初始化系统参�??
     pet_care_data.temperature = 25.0;
     pet_care_data.humidity = 50;
     pet_care_data.light_value = 50;
@@ -39,9 +40,9 @@ void PetCare_Init(void)
     pet_care_data.fan_status = DEVICE_OFF;
     pet_care_data.light_status = DEVICE_OFF;
     pet_care_data.beep_status = DEVICE_OFF;
-    pet_care_data.auto_control = DEVICE_ON; // 默认开启自动控�?
+    pet_care_data.auto_control = DEVICE_ON; // 默认开启自动控�??
     
-    // 关闭所有设�?
+    // 关闭所有设�??
     PetCare_Set_Fan(DEVICE_OFF);
     PetCare_Set_Light(DEVICE_OFF);
     PetCare_Set_Beep(DEVICE_OFF);
@@ -54,7 +55,7 @@ void PetCare_Init(void)
  */
 void PetCare_Update_Data(void)
 {
-    // 读取温湿�?
+    // 读取温湿�??
     u8 temperature = 0;
     u8 humidity = 0;
     if(DHT11_Read_Data(&temperature, &humidity) == 0) // 读取成功
@@ -63,7 +64,7 @@ void PetCare_Update_Data(void)
         pet_care_data.humidity = humidity;
     }
     
-    // 读取光照�?
+    // 读取光照�??
     pet_care_data.light_value = Lsens_Get_Val();
     
     // 更新系统状�?
@@ -100,7 +101,7 @@ void PetCare_Auto_Control(void)
     // 温度控制 - 风扇
     u8 speed = 50; // 默认速度50%
 		
-		// 只有在自动控制模式下才执�?
+		// 只有在自动控制模式下才执�??
     if(pet_care_data.auto_control != DEVICE_ON)
     {
         return;
@@ -110,13 +111,13 @@ void PetCare_Auto_Control(void)
     
     if(pet_care_data.temperature >= TEMP_WARNING_HIGH)
     {
-        // 温度过高，开启风�?
+        // 温度过高，开启风�??
         PetCare_Set_Fan(DEVICE_ON);
         
         // 根据温度调整风扇速度
         if(pet_care_data.temperature >= TEMP_ALARM_HIGH)
         {
-            speed = 100; // 温度过高，全速运�?
+            speed = 100; // 温度过高，全速运�??
         }
         else
         {
@@ -129,23 +130,23 @@ void PetCare_Auto_Control(void)
     }
     else
     {
-        // 温度正常，关闭风�?
+        // 温度正常，关闭风�??
         PetCare_Set_Fan(DEVICE_OFF);
     }
     
-    // 光照控制 - RGB�?
+    // 光照控制 - RGB�??
     if(pet_care_data.light_value <= LIGHT_WARNING_LOW)
     {
-        // 光照不足，开启照�?
+        // 光照不足，开启照�??
         PetCare_Set_Light(DEVICE_ON);
     }
     else
     {
-        // 光照充足，关闭照�?
+        // 光照充足，关闭照�??
         PetCare_Set_Light(DEVICE_OFF);
     }
     
-    // 报警控制 - 蜂鸣�?
+    // 报警控制 - 蜂鸣�??
     if(pet_care_data.system_status == PET_CARE_ALARM)
     {
         // 报警状态，开启蜂鸣器
@@ -153,7 +154,7 @@ void PetCare_Auto_Control(void)
     }
     else
     {
-        // 非报警状态，关闭蜂鸣�?
+        // 非报警状态，关闭蜂鸣�??
         PetCare_Set_Beep(DEVICE_OFF);
     }
 }
@@ -210,6 +211,9 @@ void PetCare_Display_Data(void)
     
     sprintf(buf, "Auto: %s  ", pet_care_data.auto_control == DEVICE_ON ? "ON" : "OFF");
     LCD_ShowString(10, 190, 200, 16, 16, (u8*)buf);
+
+    LCD_ShowPicture(50,210,100,91,(u8*)gImage_doro2);
+
 }
 
 /**
@@ -238,7 +242,7 @@ void PetCare_Set_Fan(u8 status)
 {
     if(status == DEVICE_ON)
     {
-        // 开启白色照�?
+        // 开启白色照�??
         u8 i, j;
         for(i=0; i<RGB_LED_YHIGH; i++)
         {
@@ -295,7 +299,7 @@ void PetCare_Set_Light(u8 status)
 
 
 /**
- * @brief 设置蜂鸣器状�?
+ * @brief 设置蜂鸣器状�??
  * @param status: DEVICE_ON/DEVICE_OFF
  */
 void PetCare_Set_Beep(u8 status)
@@ -307,7 +311,7 @@ void PetCare_Set_Beep(u8 status)
     }
     else
     {
-        BEEP = 0; // 关闭蜂鸣�?
+        BEEP = 0; // 关闭蜂鸣�??
         pet_care_data.beep_status = DEVICE_OFF;
     }
 }
@@ -322,7 +326,7 @@ void PetCare_Set_Auto_Control(u8 status)
     
     if(status != DEVICE_ON)
     {
-        // 关闭自动控制时，默认关闭所有设�?
+        // 关闭自动控制时，默认关闭所有设�??
         PetCare_Set_Fan(DEVICE_OFF);
         PetCare_Set_Light(DEVICE_OFF);
         PetCare_Set_Beep(DEVICE_OFF);
@@ -331,7 +335,7 @@ void PetCare_Set_Auto_Control(u8 status)
 
 /**
  * @brief 处理蓝牙命令
- * @param cmd: 命令字符�?
+ * @param cmd: 命令字符�??
  */
 void PetCare_Process_Command(char* cmd)
 {
@@ -365,7 +369,7 @@ void PetCare_Process_Command(char* cmd)
         printf("Light turned OFF\r\n");
     }
     
-    // 蜂鸣器控制命�?
+    // 蜂鸣器控制命�??
     else if(strcmp(cmd, "+BEEP ON\r\n") == 0)
     {
         PetCare_Set_Auto_Control(DEVICE_OFF); // 关闭自动控制
@@ -391,7 +395,7 @@ void PetCare_Process_Command(char* cmd)
         printf("Auto control turned OFF\r\n");
     }
     
-    // 查询状态命�?
+    // 查询状态命�??
     else if(strcmp(cmd, "+STATUS?\r\n") == 0)
     {
         printf("Temperature: %.1f C\r\n", pet_care_data.temperature);
