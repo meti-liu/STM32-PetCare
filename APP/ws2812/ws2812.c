@@ -89,6 +89,7 @@ void RGB_LED_Reset(void)
 {
 	RGB_LED_LOW;
 	delay_us(80);
+	RGB_LED_HIGH;
 }
 
 void RGB_LED_Write_Byte(uint8_t byte)
@@ -167,7 +168,7 @@ void RGB_DrawDotColor(u8 x,u8 y,u8 status,u32 color)
 	u8 i=0;
 	u8 j=0;
 	
-	RGB_LED_Clear();
+	//RGB_LED_Clear();
 	if(status)
 	{
 		g_rgb_databuf[0][x][y]=color>>16;//r
@@ -290,5 +291,34 @@ void RGB_ShowCharNum(u8 num,u32 color)
 			}
 		}
 	}
+}
+
+
+
+u8 heart[5][5] = {{0,1,0,1,0},
+				  {1,1,1,1,1},
+				 {1,1,1,1,1},
+				{0,1,1,1,0},
+				{0,0,1,0,0}};
+
+void RGB_DrawHeart(u32 color){
+	u8 i,j;
+	clean_databuf();
+	for(i=0;i<5;i++){
+		for(j=0;j<5;j++){
+			if(heart[i][j]){
+				g_rgb_databuf[0][i][j]=color>>16;//r
+				g_rgb_databuf[1][i][j]=color>>8;//g
+				g_rgb_databuf[2][i][j]=color;//b
+			}
+		}
+	}
+
+	for(i=0;i<RGB_LED_YHIGH;i++)
+	{
+		for(j=0;j<RGB_LED_XWIDTH;j++)
+			RGB_LED_Write_24Bits(g_rgb_databuf[1][i][j], g_rgb_databuf[0][i][j], g_rgb_databuf[2][i][j]);
+	}
+
 }
 
