@@ -9,6 +9,7 @@
 
 // 全局变量定义
 PetCare_TypeDef pet_care_data;
+uint8_t music_mode = 0; // 0 = 非音乐模式，1 = 音乐模式
 
 /**
  * @brief 初始化宠物照护系统
@@ -637,10 +638,11 @@ void PetCare_Set_Auto_Control(u8 status)
  * @brief 处理蓝牙命令
  * @param cmd: 命令字符�??
  */
-void PetCare_Process_Command(char* cmd)
+/*void PetCare_Process_Command(char* cmd)
 {
     printf("Received command: %s\r\n", cmd);
-    
+	
+	   
     // 风扇控制命令
     if(strcmp(cmd, "+FAN ON\r\n") == 0)
     {
@@ -708,9 +710,127 @@ void PetCare_Process_Command(char* cmd)
         printf("Auto Control: %s\r\n", pet_care_data.auto_control == DEVICE_ON ? "ON" : "OFF");
     }
 
-    if(strcmp(cmd,"+music on\r\n")==0)
+    else if (strcmp(cmd, "+MUSIC ON") == 0)
     {
-        printf("music play\r\n");
-        music_sample();
+        music_mode = 1;
+        printf("Entered music mode. Send 1-9 to select song.\r\n");
+    }
+    else if (strcmp(cmd, "+MUSIC OFF") == 0)
+    {
+        music_mode = 0;
+        music_stop();  // 关闭音乐播放
+        printf("Exited music mode.\r\n");
+    }
+}*/
+
+
+void PetCare_Process_Command(char* cmd)
+{
+		size_t len;
+    printf("Received command: %s\r\n", cmd);
+
+
+
+    // ===== 音乐模式判断优先 =====
+    if (music_mode && (strcmp(cmd, "1\r\n") == 0 || strcmp(cmd, "2\r\n") == 0))
+    {
+        if (strcmp(cmd, "1\r\n") == 0)
+        {
+            printf("Playing song 1 (两只老虎)...\r\n");
+            play_music1();
+            return;
+        }
+        else if (strcmp(cmd, "2\r\n") == 0)
+        {
+            printf("Playing song 2 (打上花火)...\r\n");
+            play_music2();
+            return;
+        }
+        else
+        {
+            printf("Invalid song selection. Send 1 or 2.\r\n");
+            return;
+        }
+    }
+
+    // ===== 正常控制命令区 =====
+
+    // 风扇控制
+    if(strcmp(cmd, "+FAN ON\r\n") == 0)
+    {
+        PetCare_Set_Auto_Control(DEVICE_OFF);
+        PetCare_Set_Fan(DEVICE_ON);
+        printf("Fan turned ON\r\n");
+    }
+    else if(strcmp(cmd, "+FAN OFF\r\n") == 0)
+    {
+        PetCare_Set_Auto_Control(DEVICE_OFF);
+        PetCare_Set_Fan(DEVICE_OFF);
+        printf("Fan turned OFF\r\n");
+    }
+
+    // 照明控制
+    else if(strcmp(cmd, "+LIGHT ON\r\n") == 0)
+    {
+        PetCare_Set_Auto_Control(DEVICE_OFF);
+        PetCare_Set_Light(DEVICE_ON);
+        printf("Light turned ON\r\n");
+    }
+    else if(strcmp(cmd, "+LIGHT OFF\r\n") == 0)
+    {
+        PetCare_Set_Auto_Control(DEVICE_OFF);
+        PetCare_Set_Light(DEVICE_OFF);
+        printf("Light turned OFF\r\n");
+    }
+
+    // 蜂鸣器控制
+    else if(strcmp(cmd, "+BEEP ON\r\n") == 0)
+    {
+        PetCare_Set_Auto_Control(DEVICE_OFF);
+        PetCare_Set_Beep(DEVICE_ON);
+        printf("Beep turned ON\r\n");
+    }
+    else if(strcmp(cmd, "+BEEP OFF\r\n") == 0)
+    {
+        PetCare_Set_Auto_Control(DEVICE_OFF);
+        PetCare_Set_Beep(DEVICE_OFF);
+        printf("Beep turned OFF\r\n");
+    }
+
+    // 自动控制切换
+    else if(strcmp(cmd, "+AUTO ON\r\n") == 0)
+    {
+        PetCare_Set_Auto_Control(DEVICE_ON);
+        printf("Auto control turned ON\r\n");
+    }
+    else if(strcmp(cmd, "+AUTO OFF\r\n") == 0)
+    {
+        PetCare_Set_Auto_Control(DEVICE_OFF);
+        printf("Auto control turned OFF\r\n");
+    }
+
+    // 状态查询
+    else if(strcmp(cmd, "+STATUS?\r\n") == 0)
+    {
+        printf("Temperature: %.1f C\r\n", pet_care_data.temperature);
+        printf("Humidity: %d%%\r\n", pet_care_data.humidity);
+        printf("Light: %d%%\r\n", pet_care_data.light_value);
+        printf("System Status: %d\r\n", pet_care_data.system_status);
+        printf("Fan: %s\r\n", pet_care_data.fan_status == DEVICE_ON ? "ON" : "OFF");
+        printf("Light: %s\r\n", pet_care_data.light_status == DEVICE_ON ? "ON" : "OFF");
+        printf("Beep: %s\r\n", pet_care_data.beep_status == DEVICE_ON ? "ON" : "OFF");
+        printf("Auto Control: %s\r\n", pet_care_data.auto_control == DEVICE_ON ? "ON" : "OFF");
+    }
+
+    // ===== 音乐模式命令切换 =====
+    else if (strcmp(cmd, "+MUSIC ON\r\n") == 0)
+    {
+        music_mode = 1;
+        printf("Entered music mode. Send 1 or 2 to select song.\r\n");
+    }
+
+    else
+    {
+        printf("Unknown command: %s\r\n", cmd);
     }
 }

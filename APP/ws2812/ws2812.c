@@ -303,7 +303,7 @@ u8 heart[5][5] = {{0,1,0,1,0},
 
 void RGB_DrawHeart(u32 color){
 	u8 i,j;
-	clean_databuf();
+	//clean_databuf();
 	for(i=0;i<5;i++){
 		for(j=0;j<5;j++){
 			if(heart[i][j]){

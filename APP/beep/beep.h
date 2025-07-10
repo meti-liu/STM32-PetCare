@@ -16,5 +16,7 @@
 
 void BEEP_Init(void);
 void music_sample(void); 
+void play_music1(void);              // 新增：两只老虎
+void play_music2(void);              // 新增：打上花火片段
 
 #endif
