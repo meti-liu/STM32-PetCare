@@ -65,5 +65,5 @@ void PetCare_Process_Command(char* cmd);    // 处理蓝牙命令
 
 // 全局变量声明
 extern PetCare_TypeDef pet_care_data;
-
+extern uint8_t music_mode;
 #endif

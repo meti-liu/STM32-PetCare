@@ -10,6 +10,7 @@
 // 全局变量定义
 PetCare_TypeDef pet_care_data;
 
+uint8_t music_mode = 0; // 0 = 非音乐模式，1 = 音乐模式
 /**
  * @brief 初始化宠物照护系�??
  */
@@ -623,6 +624,28 @@ void PetCare_Set_Auto_Control(u8 status)
 void PetCare_Process_Command(char* cmd)
 {
     printf("Received command: %s\r\n", cmd);
+
+     // ===== 音乐模式判断优先 =====
+    if (music_mode && (strcmp(cmd, "1\r\n") == 0 || strcmp(cmd, "2\r\n") == 0))
+    {
+        if (strcmp(cmd, "1\r\n") == 0)
+        {
+                    printf("Playing song 1 (打上花火)...\r\n");
+            play_music1();
+            return;
+        }
+        else if (strcmp(cmd, "2\r\n") == 0)
+        {
+            printf("Playing song 2 (晴天)...\r\n");
+            play_music2();
+            return;
+        }
+        else
+        {
+            printf("Invalid song selection. Send 1 or 2.\r\n");
+            return;
+        }
+    }
     
     // 风扇控制命令
     if(strcmp(cmd, "+FAN ON\r\n") == 0)
@@ -697,9 +720,10 @@ void PetCare_Process_Command(char* cmd)
         pet_care_data.current_page = (pet_care_data.current_page+3-1)%3;
     }
 
-    if(strcmp(cmd,"+music on\r\n")==0)
+    else if (strcmp(cmd, "+MUSIC ON\r\n") == 0)
     {
-        printf("music play\r\n");
-        music_sample();
+        music_mode = 1;
+               play_music1();
+        printf("Entered music mode. Send 1 or 2 to select song.\r\n");
     }
 }

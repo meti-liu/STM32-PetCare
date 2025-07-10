@@ -1,5 +1,7 @@
 #include "beep.h"
 #include "stdio.h"
+#include <string.h>
+#include "SysTick.h"
 
 /*******************************************************************************
 * 函 数 名         : BEEP_Init
@@ -22,10 +24,26 @@ void BEEP_Init(void)	  //端口初始化
 	GPIO_ResetBits(BEEP_PORT,BEEP_PIN);
 }
 
+extern uint8_t music_mode;  // 确保能访问全局变量
 
-uint16_t tone[] = {
-        0, 261, 294, 330, 349, 392, 440, 494
+
+
+
+#define H(n)  ((n) + 10)   /* 高八度 */
+#define L(n)  ((n) + 20)   /* 低八度 */
+
+static const uint16_t tone[] = {
+    /* 0 */   0,          /* 休止符 */
+    /* 1-7  中音 C4~B4 */ 262,294,330,349,392,440,494,
+    /* 8-10 预留给升降号，可置 0 */
+               0,   0,   0,
+    /* 11-17 高音 C5~B5 */523,587,659,698,784,880,988,
+    /* 18-20 预留 */
+               0,   0,   0,
+    /* 21-27 低音 C3~B3 */131,147,165,175,196,220,247
 };
+/* ------------------------------------------ */
+
 
 #define MUSIC_LEN   48     
 
@@ -81,5 +99,72 @@ void music_sample(void)                             //音乐演奏
 			}
  			USART3_RX_STA=0;	 
 		}                  //短停顿
+    }
+}
+
+
+
+void play_music1(void)
+{
+    uint8_t notes[] = {
+    12,13,15,11,12,13,15,11,12,13,15,16,12,13,6,11,
+		2,3,5,1,2,3,5,1,2,3,5,6,2,3,26,1,
+		3,5,6,0,11,12,0,7,5,4,0,3,5,7,11,
+		11,7,6,11,0,7,5,5
+    };
+    uint16_t len = sizeof(notes) / sizeof(notes[0]);
+    uint16_t i = 0;
+
+    for (i = 0; i < len; i++)
+    {
+        beep_play_one_beat(tone[notes[i]]);
+        delay_us(BEAT_TIME / 50);  // 模拟短停顿
+
+        if (USART3_RX_STA & 0x8000)
+        {
+            uint8_t reclen = USART3_RX_STA & 0x7FFF;
+            USART3_RX_BUF[reclen] = '\0';
+            if (strcmp("+stop music\r\n", (char *)USART3_RX_BUF) == 0)
+            {
+                USART3_RX_STA = 0;
+							  music_mode = 0;  //退出音乐模式
+                return;
+            }
+            USART3_RX_STA = 0;
+        }
+    }
+}
+
+
+void play_music2(void)
+{
+		uint8_t notes[] = {
+    3, 2, 4, 3, 1, 5, 7, H(1), 7, 5, 1, 
+    1, 6, 6, 6, 5 ,5, 5, 4, 3, 2, 3, 4, 3,
+    3,4,5,3,4,5,7, H(2),7,H(1),H(1),
+		H(1),H(1),5,5,6,5,4,2,3,4,5,6,1,6,7,7
+		
+};
+
+    uint16_t len = sizeof(notes) / sizeof(notes[0]);
+    uint16_t i = 0;
+
+    for (i = 0; i < len; i++)
+    {
+        beep_play_one_beat(tone[notes[i]]);
+        delay_us(BEAT_TIME / 50);  // 模拟短停顿
+
+        if (USART3_RX_STA & 0x8000)
+        {
+            uint8_t reclen = USART3_RX_STA & 0x7FFF;
+            USART3_RX_BUF[reclen] = '\0';
+            if (strcmp("+stop music\r\n", (char *)USART3_RX_BUF) == 0)
+            {
+                USART3_RX_STA = 0;
+							  music_mode = 0;  //退出音乐模式
+                return;
+            }
+            USART3_RX_STA = 0;
+        }
     }
 }
