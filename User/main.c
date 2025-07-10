@@ -6,6 +6,7 @@
 #include "tftlcd.h"
 #include "hc05.h"
 #include "usart3.h"			 	 
+#include "usart2.h"			 	 
 #include "string.h"
 #include "dht11.h"
 #include "lsens.h"
@@ -57,6 +58,7 @@ int main()
 	KEY_Init();
 	//RGB_LED_Init();
 	USART1_Init(115200);
+	USART2_Init(9600);		// UART2初始化，用于与电脑通信
 	TFTLCD_Init();			// LCD��ʼ��
 	BEEP_Init();			// ��������ʼ��
 	TIM3_CH3_PWM_Init(100, 7200-1); // ����PWM��ʼ��
@@ -155,16 +157,49 @@ int main()
 		  	USART3_RX_BUF[reclen]='\0';	 	// ���ӽ�����
 			printf("Received: %s\r\n", USART3_RX_BUF);
 			
-			// ������������
-			PetCare_Process_Command((char*)USART3_RX_BUF);
-			
-			// ������ʾ
-			PetCare_Display_Data();
-			
- 			USART3_RX_STA=0;	 
+			// 处理蓝牙命令
+		// 检查是否是DeepSeek相关命令
+		if(strncmp((char*)USART3_RX_BUF, "+deepseek", 9) == 0 || 
+		   strncmp((char*)USART3_RX_BUF, "+deepseek_response", 18) == 0)
+		{
+			// DeepSeek相关命令转发到UART2处理
+			PetCare_Process_Command_Ex((char*)USART3_RX_BUF, 1);
 		}
-		
-		delay_ms(10);
-		t++;	
+		else
+		{
+			// 其他命令保持原有处理方式
+			PetCare_Process_Command((char*)USART3_RX_BUF);
+			// 更新显示
+			PetCare_Display_Data();
+		}
+ 			USART3_RX_STA=0;	 
 	}
+	
+	// 处理UART2数据（与电脑通信）
+	if(USART2_RX_STA&0X8000)		// 接收到一批数据
+	{
+		reclen=USART2_RX_STA&0X7FFF;	// 得到数据长度
+		USART2_RX_BUF[reclen]='\0';	 	// 添加结束符
+		printf("UART2 Received: %s\r\n", USART2_RX_BUF);
+		
+		// 处理DeepSeek相关命令
+		if(strncmp((char*)USART2_RX_BUF, "+deepseek", 9) == 0 || 
+		   strncmp((char*)USART2_RX_BUF, "+deepseek_response", 18) == 0)
+		{
+			// DeepSeek相关命令始终使用UART2处理
+			PetCare_Process_Command_Ex((char*)USART2_RX_BUF, 1);
+		}
+		else
+		{
+			// 其他命令保持原有处理方式
+			PetCare_Process_Command((char*)USART2_RX_BUF);
+			// 更新显示
+			PetCare_Display_Data();
+		}
+		USART2_RX_STA=0;	 
+	}
+	
+	delay_ms(10);
+	t++;	
+}
 }

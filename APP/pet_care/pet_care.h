@@ -61,6 +61,8 @@ void PetCare_Switch_Page(void);             // 切换显示页面
 void PetCare_Display_Page(u8 page);         // 显示指定页面
 void PetCare_Set_Auto_Control(u8 status);   // 设置自动控制状态
 void PetCare_Process_Command(char* cmd);    // 处理蓝牙命令
+void PetCare_Process_Command_Ex(char* cmd, u8 output_port); // 处理命令（扩展版本，支持指定输出端口）
+void PetCare_Process_DeepSeek_Response(char* response); // 处理DeepSeek API响应
 
 // 全局变量声明
 extern PetCare_TypeDef pet_care_data;
