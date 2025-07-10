@@ -84,36 +84,7 @@
 
 
 
-├── README.md                         # 项目说明文档
-├── main.c                            # 主程序入口（系统初始化与主循环）
-├── APP/                              # 功能模块目录
-│   ├── pet_care/                     # 宠物照护系统核心逻辑（自动控制、页面切换等）
-│   ├── dht11/                        # 温湿度传感器驱动
-│   ├── lsens/                        # 光敏传感器驱动
-│   ├── ws2812/                       # RGB 彩灯控制，含爱心绘图函数
-│   ├── beep/                         # 蜂鸣器控制模块
-│   ├── pwm/                          # PWM 驱动模块，用于风扇调速
-│   ├── hc05/                         # 蓝牙模块 HC05 初始化与角色识别
-│   ├── usart3/                       # 串口3（蓝牙通信）接收与指令处理
-│   ├── key/                          # 按键驱动模块，支持多按键识别
-│   ├── tftlcd/                       # TFT LCD 显示驱动与图片资源
-│   ├── led/                          # LED 灯控制模块（状态指示灯）
-│   └── time/, touch/, iic/, 24Cxx/  # 其他预留或未使用模块
-│
-├── Public/                           # 公共函数模块（时钟、中断、串口等）
-│   ├── system.c/h                    # 系统初始化相关配置
-│   ├── SysTick.c/h                   # 毫秒延时函数封装
-│   └── usart.c/h                     
-│
-├── Libraries/                        # STM32 标准库
-│   ├── CMSIS/                        # ARM Cortex-M3 核心支持库
-│   └── STM32F10x_StdPeriph_Driver/  # STM32外设驱动库（ADC/GPIO/TIM等）
-│
-├── img/                              # 项目配套图片资源（如系统结构图）
-│   └── structure.png
-│
-├── Template.uvprojx 等              # Keil 工程配置文件
-└── DebugConfig/, Obj/, User/        # 自动生成的调试/中间文件目录
+<pre> ├── <b>README.md</b>                         # 项目说明文档 ├── <b>main.c</b>                            # 主程序入口（系统初始化与主循环） ├── <b>APP/</b>                              # 功能模块目录 │   ├── <b>pet_care/</b>                     # 宠物照护系统核心逻辑（自动控制、页面切换等） │   ├── <b>dht11/</b>                        # 温湿度传感器驱动 │   ├── <b>lsens/</b>                        # 光敏传感器驱动 │   ├── <b>ws2812/</b>                       # RGB 彩灯控制，含爱心绘图函数 │   ├── <b>beep/</b>                         # 蜂鸣器控制模块 │   ├── <b>pwm/</b>                          # PWM 驱动模块，用于风扇调速 │   ├── <b>hc05/</b>                         # 蓝牙模块 HC05 初始化与角色识别 │   ├── <b>usart3/</b>                       # 串口3（蓝牙通信）接收与指令处理 │   ├── <b>key/</b>                          # 按键驱动模块，支持多按键识别 │   ├── <b>tftlcd/</b>                       # TFT LCD 显示驱动与图片资源 │   ├── <b>led/</b>                          # LED 状态灯模块 │   └── 其他（touch/, iic/, 24Cxx/ 等）       # 预留或未使用模块 │ ├── <b>Public/</b>                           # 公共函数模块（系统初始化、中断、串口等） │   ├── system.c/h │   ├── SysTick.c/h │   └── usart.c/h │ ├── <b>Libraries/</b>                        # STM32 标准库 │   ├── CMSIS/                               # ARM Cortex-M3 核心支持库 │   └── STM32F10x_StdPeriph_Driver/          # STM32 外设驱动库（GPIO/TIM等） │ ├── <b>img/</b>                              # 项目结构图等图片资源 │   └── structure.png ├── <b>Template.uvprojx</b> 等               # Keil 工程配置文件 └── <b>DebugConfig/、Obj/、User/</b>         </pre>
 
 
 
