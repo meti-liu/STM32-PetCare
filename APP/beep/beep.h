@@ -4,6 +4,7 @@
 #include "system.h"
 #include "usart3.h"
 
+
 /*  蜂鸣器时钟端口、引脚定义 */
 #define BEEP_PORT 			GPIOB   
 #define BEEP_PIN 			GPIO_Pin_8
@@ -16,5 +17,7 @@
 
 void BEEP_Init(void);
 void music_sample(void); 
+void play_music1(void);              // 新增：两只老虎
+void play_music2(void);              // 新增：打上花火片段
 
 #endif

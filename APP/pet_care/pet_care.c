@@ -13,6 +13,7 @@
 // 全局变量定义
 PetCare_TypeDef pet_care_data;
 
+uint8_t music_mode = 0; // 0 = 非音乐模式，1 = 音乐模式
 /**
  * @brief 初始化宠物照护系�??
  */
@@ -36,6 +37,8 @@ void PetCare_Init(void)
     // 初始化RGB彩灯
     RGB_LED_Init();
     RGB_LED_Clear();
+    // 播放开机动画
+    RGB_StartupAnimation();
     
     // 初始化系统参�??
     pet_care_data.temperature = 25.0;
@@ -595,29 +598,12 @@ void PetCare_Set_Light(u8 status)
     
     if(status == DEVICE_ON)
     {
-        u32 color;
-        if(pet_care_data.light_value < 20)
-            color = RGB_COLOR_BLUE;
-        else if(pet_care_data.light_value < 30)
-            color = RGB_COLOR_PINK;
-        else
-            color = RGB_COLOR_GREEN;
-				
-        /*for(i = 0; i < RGB_LED_YHIGH; i++)
-        {
-            for(j = 0; j < RGB_LED_XWIDTH; j++)
-            {
-                
-                RGB_DrawDotColor(j, i, 1, color); 
-            }
-        }	*/	
-        RGB_DrawHeart(color);
-
+        LED2 = 0;
         pet_care_data.light_status = DEVICE_ON;
     }
     else
     {
-        RGB_LED_Clear(); // 关闭照明
+        LED2 = 1;
         pet_care_data.light_status = DEVICE_OFF;
     }
     
@@ -715,6 +701,28 @@ void PetCare_Process_Command(char* cmd)
 void PetCare_Process_Command_Ex(char* cmd, u8 output_port)
 {
     printf("Received command: %s\r\n", cmd);
+
+     // ===== 音乐模式判断优先 =====
+    if (music_mode && (strcmp(cmd, "1\r\n") == 0 || strcmp(cmd, "2\r\n") == 0))
+    {
+        if (strcmp(cmd, "1\r\n") == 0)
+        {
+                    printf("Playing song 1 (打上花火)...\r\n");
+            play_music1();
+            return;
+        }
+        else if (strcmp(cmd, "2\r\n") == 0)
+        {
+            printf("Playing song 2 (晴天)...\r\n");
+            play_music2();
+            return;
+        }
+        else
+        {
+            printf("Invalid song selection. Send 1 or 2.\r\n");
+            return;
+        }
+    }
     
     // 风扇控制命令
     if(strcmp(cmd, "+FAN ON\r\n") == 0)
@@ -825,12 +833,11 @@ void PetCare_Process_Command_Ex(char* cmd, u8 output_port)
         pet_care_data.current_page = (pet_care_data.current_page+3-1)%3;
     }
 
-    if(strcmp(cmd,"+music on\r\n")==0)
+    else if (strcmp(cmd, "+MUSIC ON\r\n") == 0)
     {
-        printf("music play\r\n");
-        if(output_port == 1) u2_printf("music play\r\n");
-        else u3_printf("music play\r\n");
-        music_sample();
+        music_mode = 1;
+        play_music1();
+        printf("Entered music mode. Send 1 or 2 to select song.\r\n");
     }else if(strncmp(cmd,"+deepseek ", 10) == 0)
     {
         // 提取DeepSeek查询内容
@@ -859,5 +866,6 @@ void PetCare_Process_Command_Ex(char* cmd, u8 output_port)
         
         // 不调用PetCare_Process_DeepSeek_Response函数，避免在LCD上显示
         // PetCare_Process_DeepSeek_Response(response);
+        
     }
 }

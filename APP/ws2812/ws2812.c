@@ -301,24 +301,93 @@ u8 heart[5][5] = {{0,1,0,1,0},
 				{0,1,1,1,0},
 				{0,0,1,0,0}};
 
-void RGB_DrawHeart(u32 color){
-	u8 i,j;
-	clean_databuf();
-	for(i=0;i<5;i++){
-		for(j=0;j<5;j++){
-			if(heart[i][j]){
-				g_rgb_databuf[0][i][j]=color>>16;//r
-				g_rgb_databuf[1][i][j]=color>>8;//g
-				g_rgb_databuf[2][i][j]=color;//b
-			}
-		}
-	}
+void RGB_Draw(u8 pattern[5][5], u32 color)
+{
+    u8 i,j;
+    clean_databuf();
+    for(i=0;i<5;i++){
+        for(j=0;j<5;j++){
+            if(pattern[i][j]){
+                g_rgb_databuf[0][i][j]=color>>16;//r
+                g_rgb_databuf[1][i][j]=color>>8;//g
+                g_rgb_databuf[2][i][j]=color;//b
+            }
+        }
+    }
 
-	for(i=0;i<RGB_LED_YHIGH;i++)
-	{
-		for(j=0;j<RGB_LED_XWIDTH;j++)
-			RGB_LED_Write_24Bits(g_rgb_databuf[1][i][j], g_rgb_databuf[0][i][j], g_rgb_databuf[2][i][j]);
-	}
-
+    for(i=0;i<RGB_LED_YHIGH;i++){
+        for(j=0;j<RGB_LED_XWIDTH;j++)
+            RGB_LED_Write_24Bits(g_rgb_databuf[1][i][j], g_rgb_databuf[0][i][j], g_rgb_databuf[2][i][j]);
+    }
 }
+
+void RGB_StartupAnimation(void)
+{
+    u8 i;
+    u32 colors[] = {RGB_COLOR_RED, RGB_COLOR_GREEN, RGB_COLOR_BLUE, RGB_COLOR_YELLOW, RGB_COLOR_PINK};
+    u8 corner_pattern[5][5] = {
+        {1,0,0,0,0},
+        {0,0,0,0,0},
+        {0,0,0,0,0},
+        {0,0,0,0,0},
+        {0,0,0,0,0}
+    };
+    u8 center_pattern[5][5] = {
+        {0,0,0,0,0},
+        {0,1,0,1,0},
+        {0,0,0,0,0},
+        {0,1,0,1,0},
+        {0,0,0,0,0}
+    };
+    u8 dot_pattern[5][5] = {
+        {0,0,0,0,0},
+        {0,0,0,0,0},
+        {0,0,1,0,0},
+        {0,0,0,0,0},
+        {0,0,0,0,0}
+    };
+    
+    // 1. 四角点亮动画
+    RGB_LED_Clear();
+    RGB_Draw(corner_pattern, RGB_COLOR_RED);
+    delay_ms(200);
+    
+    corner_pattern[0][0] = 0;
+    corner_pattern[0][4] = 1;
+    RGB_Draw(corner_pattern, RGB_COLOR_GREEN);
+    delay_ms(200);
+    
+    corner_pattern[0][4] = 0;
+    corner_pattern[4][0] = 1;
+    RGB_Draw(corner_pattern, RGB_COLOR_BLUE);
+    delay_ms(200);
+    
+    corner_pattern[4][0] = 0;
+    corner_pattern[4][4] = 1;
+    RGB_Draw(corner_pattern, RGB_COLOR_YELLOW);
+    delay_ms(200);
+    
+    // 2. 向中心汇聚
+    RGB_Draw(center_pattern, RGB_COLOR_WHITE);
+    delay_ms(300);
+    
+    // 3. 中心点闪烁
+    for(i = 0; i < 3; i++) {
+        RGB_Draw(dot_pattern, RGB_COLOR_WHITE);
+        delay_ms(200);
+        RGB_LED_Clear();
+        delay_ms(200);
+    }
+    
+    // 4. 心形渐变动画
+    for(i = 0; i < 5; i++) {
+        RGB_Draw(heart, colors[i]);
+        delay_ms(300);
+    }
+    
+    // 5. 最终显示粉色心形
+    RGB_Draw(heart, RGB_COLOR_PINK);
+}
+
+
 

@@ -33,5 +33,6 @@ void RGB_DrawRectangle(u16 x1, u16 y1, u16 x2, u16 y2,u32 color);
 void RGB_Draw_Circle(u16 x0,u16 y0,u8 r,u32 color);
 void RGB_ShowCharNum(u8 num,u32 color);
 void clean_databuf(void);
-void RGB_DrawHeart(u32 color);
+void RGB_Draw(u8 pattern[5][5], u32 color);
+void RGB_StartupAnimation(void);
 #endif
