@@ -1,0 +1,293 @@
+卷 Windows-SSD 的文件夹 PATH 列表
+卷序列号为 C40F-AB4B
+C:.
+│  .gitignore
+│  keilkilll.bat
+│  README.md
+│  Template.uvguix.刘博瑞
+│  Template.uvoptx
+│  Template.uvprojx
+│  tree.txt'
+│  
+├─APP
+│  ├─24Cxx
+│  │  │  24cxx.c
+│  │  │  24cxx.h
+│  │  │  
+│  │  └─__Previews
+│  │          24cxx.cPreview
+│  │          
+│  ├─beep
+│  │      beep.c
+│  │      beep.h
+│  │      
+│  ├─dht11
+│  │      dht11.c
+│  │      dht11.h
+│  │      
+│  ├─hc05
+│  │      hc05.c
+│  │      hc05.h
+│  │      
+│  ├─iic
+│  │      iic.c
+│  │      iic.h
+│  │      
+│  ├─key
+│  │      key.c
+│  │      key.h
+│  │      
+│  ├─led
+│  │      led.c
+│  │      led.h
+│  │      
+│  ├─lsens
+│  │      lsens.c
+│  │      lsens.h
+│  │      
+│  ├─pet_care
+│  │      pet_care.c
+│  │      pet_care.h
+│  │      
+│  ├─pwm
+│  │      pwm.c
+│  │      pwm.h
+│  │      
+│  ├─tftlcd
+│  │      doro2.h
+│  │      doro_hot.h
+│  │      doro_unhappy.h
+│  │      font.h
+│  │      picture.h
+│  │      tftlcd.c
+│  │      tftlcd.h
+│  │      
+│  ├─time
+│  │      time.c
+│  │      time.h
+│  │      
+│  ├─touch
+│  │      cst716.c
+│  │      cst716.h
+│  │      ctiic.c
+│  │      ctiic.h
+│  │      gt5663.c
+│  │      gt5663.h
+│  │      touch.c
+│  │      touch.h
+│  │      
+│  ├─usart3
+│  │      usart3.c
+│  │      usart3.h
+│  │      
+│  └─ws2812
+│          ws2812.c
+│          ws2812.h
+│          
+├─DebugConfig
+│      Target_1_STM32F103ZE_1.0.0.dbgconf
+│      
+├─img
+│      structure.png
+│      
+├─Libraries
+│  ├─CMSIS
+│  │      core_cm3.c
+│  │      core_cm3.h
+│  │      startup_stm32f10x_hd.s
+│  │      system_stm32f10x.c
+│  │      system_stm32f10x.h
+│  │      
+│  └─STM32F10x_StdPeriph_Driver
+│      ├─inc
+│      │      misc.h
+│      │      stm32f10x_adc.h
+│      │      stm32f10x_bkp.h
+│      │      stm32f10x_can.h
+│      │      stm32f10x_cec.h
+│      │      stm32f10x_crc.h
+│      │      stm32f10x_dac.h
+│      │      stm32f10x_dbgmcu.h
+│      │      stm32f10x_dma.h
+│      │      stm32f10x_exti.h
+│      │      stm32f10x_flash.h
+│      │      stm32f10x_fsmc.h
+│      │      stm32f10x_gpio.h
+│      │      stm32f10x_i2c.h
+│      │      stm32f10x_iwdg.h
+│      │      stm32f10x_pwr.h
+│      │      stm32f10x_rcc.h
+│      │      stm32f10x_rtc.h
+│      │      stm32f10x_sdio.h
+│      │      stm32f10x_spi.h
+│      │      stm32f10x_tim.h
+│      │      stm32f10x_usart.h
+│      │      stm32f10x_wwdg.h
+│      │      
+│      └─src
+│              misc.c
+│              stm32f10x_adc.c
+│              stm32f10x_bkp.c
+│              stm32f10x_can.c
+│              stm32f10x_cec.c
+│              stm32f10x_crc.c
+│              stm32f10x_dac.c
+│              stm32f10x_dbgmcu.c
+│              stm32f10x_dma.c
+│              stm32f10x_exti.c
+│              stm32f10x_flash.c
+│              stm32f10x_fsmc.c
+│              stm32f10x_gpio.c
+│              stm32f10x_i2c.c
+│              stm32f10x_iwdg.c
+│              stm32f10x_pwr.c
+│              stm32f10x_rcc.c
+│              stm32f10x_rtc.c
+│              stm32f10x_sdio.c
+│              stm32f10x_spi.c
+│              stm32f10x_tim.c
+│              stm32f10x_usart.c
+│              stm32f10x_wwdg.c
+│              
+├─Obj
+│  │  beep.crf
+│  │  beep.d
+│  │  beep.o
+│  │  core_cm3.crf
+│  │  core_cm3.d
+│  │  core_cm3.o
+│  │  dht11.crf
+│  │  dht11.d
+│  │  dht11.o
+│  │  ds18b20.d
+│  │  hc05.crf
+│  │  hc05.d
+│  │  hc05.o
+│  │  key.crf
+│  │  key.d
+│  │  key.o
+│  │  led.crf
+│  │  led.d
+│  │  led.o
+│  │  lsens.crf
+│  │  lsens.d
+│  │  lsens.o
+│  │  main.crf
+│  │  main.d
+│  │  main.o
+│  │  misc.crf
+│  │  misc.d
+│  │  misc.o
+│  │  pet_care.crf
+│  │  pet_care.d
+│  │  pet_care.o
+│  │  pwm.crf
+│  │  pwm.d
+│  │  pwm.o
+│  │  PZ-HC05蓝牙模块测试程序V2.0--ILI9481--（适用于Z100&Z300&Z400&Z500开发板）.hex
+│  │  PZ-HC05蓝牙模块测试程序V2.0--ILI9488.hex
+│  │  startup_stm32f10x_hd.d
+│  │  startup_stm32f10x_hd.lst
+│  │  startup_stm32f10x_hd.o
+│  │  stm32f10x_adc.crf
+│  │  stm32f10x_adc.d
+│  │  stm32f10x_adc.o
+│  │  stm32f10x_bkp.crf
+│  │  stm32f10x_bkp.d
+│  │  stm32f10x_bkp.o
+│  │  stm32f10x_can.crf
+│  │  stm32f10x_can.d
+│  │  stm32f10x_can.o
+│  │  stm32f10x_dac.crf
+│  │  stm32f10x_dac.d
+│  │  stm32f10x_dac.o
+│  │  stm32f10x_dma.crf
+│  │  stm32f10x_dma.d
+│  │  stm32f10x_dma.o
+│  │  stm32f10x_exti.crf
+│  │  stm32f10x_exti.d
+│  │  stm32f10x_exti.o
+│  │  stm32f10x_fsmc.crf
+│  │  stm32f10x_fsmc.d
+│  │  stm32f10x_fsmc.o
+│  │  stm32f10x_gpio.crf
+│  │  stm32f10x_gpio.d
+│  │  stm32f10x_gpio.o
+│  │  stm32f10x_it.crf
+│  │  stm32f10x_it.d
+│  │  stm32f10x_it.o
+│  │  stm32f10x_iwdg.crf
+│  │  stm32f10x_iwdg.d
+│  │  stm32f10x_iwdg.o
+│  │  stm32f10x_pwr.crf
+│  │  stm32f10x_pwr.d
+│  │  stm32f10x_pwr.o
+│  │  stm32f10x_rcc.crf
+│  │  stm32f10x_rcc.d
+│  │  stm32f10x_rcc.o
+│  │  stm32f10x_rtc.crf
+│  │  stm32f10x_rtc.d
+│  │  stm32f10x_rtc.o
+│  │  stm32f10x_spi.crf
+│  │  stm32f10x_spi.d
+│  │  stm32f10x_spi.o
+│  │  stm32f10x_tim.crf
+│  │  stm32f10x_tim.d
+│  │  stm32f10x_tim.o
+│  │  stm32f10x_usart.crf
+│  │  stm32f10x_usart.d
+│  │  stm32f10x_usart.o
+│  │  stm32f10x_wwdg.crf
+│  │  stm32f10x_wwdg.d
+│  │  stm32f10x_wwdg.o
+│  │  system.crf
+│  │  system.d
+│  │  system.o
+│  │  system_stm32f10x.crf
+│  │  system_stm32f10x.d
+│  │  system_stm32f10x.o
+│  │  systick.crf
+│  │  systick.d
+│  │  systick.o
+│  │  Template.axf
+│  │  Template.build_log.htm
+│  │  Template.hex
+│  │  Template.htm
+│  │  Template.lnp
+│  │  Template.map
+│  │  Template.sct
+│  │  Template_sct.Bak
+│  │  Template_Target 1.dep
+│  │  tftlcd.crf
+│  │  tftlcd.d
+│  │  tftlcd.o
+│  │  time.crf
+│  │  time.d
+│  │  time.o
+│  │  usart.crf
+│  │  usart.d
+│  │  usart.o
+│  │  usart3.crf
+│  │  usart3.d
+│  │  usart3.o
+│  │  ws2812.crf
+│  │  ws2812.d
+│  │  ws2812.o
+│  │  
+│  ├─Listings
+│  └─Objects
+├─Public
+│      system.c
+│      system.h
+│      SysTick.c
+│      SysTick.h
+│      usart.c
+│      usart.h
+│      
+└─User
+        main.c
+        stm32f10x.h
+        stm32f10x_conf.h
+        stm32f10x_it.c
+        stm32f10x_it.h
+        
