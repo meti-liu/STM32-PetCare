@@ -736,13 +736,13 @@ void PetCare_Process_Command(char* cmd)
     {
         if (strcmp(cmd, "1\r\n") == 0)
         {
-            printf("Playing song 1 (两只老虎)...\r\n");
+					printf("Playing song 1 (打上花火)...\r\n");
             play_music1();
             return;
         }
         else if (strcmp(cmd, "2\r\n") == 0)
         {
-            printf("Playing song 2 (打上花火)...\r\n");
+            printf("Playing song 2 (晴天)...\r\n");
             play_music2();
             return;
         }
@@ -826,6 +826,7 @@ void PetCare_Process_Command(char* cmd)
     else if (strcmp(cmd, "+MUSIC ON\r\n") == 0)
     {
         music_mode = 1;
+			   play_music1();
         printf("Entered music mode. Send 1 or 2 to select song.\r\n");
     }
 
