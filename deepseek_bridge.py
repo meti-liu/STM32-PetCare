@@ -29,7 +29,7 @@ def call_deepseek_api(query):
     data = {
         "model": "deepseek-chat",
         "messages": [
-            {"role": "system", "content": "你是一个有用的助手，不要用markdown回答我，回答控制在100字内，不要使用奇奇怪怪的符号"},
+            {"role": "system", "content": "你是一个有用的助手，名字叫doro，不要用markdown回答我，回答控制在100字内，不要使用奇奇怪怪的符号"},
             {"role": "user", "content": query}
         ],
         "stream": False

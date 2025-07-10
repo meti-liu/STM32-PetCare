@@ -169,9 +169,9 @@ int main()
 		{
 			// 其他命令保持原有处理方式
 			PetCare_Process_Command((char*)USART3_RX_BUF);
-			// 更新显示
-			PetCare_Display_Data();
 		}
+		// 更新显示
+		PetCare_Display_Data();
  			USART3_RX_STA=0;	 
 	}
 	
@@ -193,9 +193,9 @@ int main()
 		{
 			// 其他命令保持原有处理方式
 			PetCare_Process_Command((char*)USART2_RX_BUF);
-			// 更新显示
-			PetCare_Display_Data();
 		}
+		// 更新显示
+		PetCare_Display_Data();
 		USART2_RX_STA=0;	 
 	}
 	

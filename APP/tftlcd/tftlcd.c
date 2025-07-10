@@ -1117,9 +1117,8 @@ u16 LCD_ReadPoint(u16 x,u16 y)
 #ifdef TFTLCD_ILI9341
 	u16 g=0,b=0;
 #endif
-	u32 value;
 
-	if(x>=tftlcd_data.width||y>=tftlcd_data.height)return 0;	//�����˷�Χ,ֱ�ӷ���		     
+	if(x>=tftlcd_data.width||y>=tftlcd_data.height)return 0;	//超出范围,直接返回		     
 	LCD_Set_Window(x, y, x, y);
 	
 #ifdef TFTLCD_HX8357D	

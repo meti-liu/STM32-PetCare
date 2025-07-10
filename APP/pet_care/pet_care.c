@@ -254,7 +254,7 @@ void PetCare_Process_DeepSeek_Response(char* response)
         
         memset(line_buf, 0, sizeof(line_buf));
         strncpy(line_buf, response + start_pos, chars_to_copy);
-        LCD_ShowString(10, y_pos, 220, 16, 16, line_buf);
+        LCD_ShowString(10, y_pos, 220, 16, 16, (u8*)line_buf);
         
         start_pos += chars_to_copy;
         y_pos += line_height;
@@ -283,15 +283,6 @@ void PetCare_Process_DeepSeek_Response(char* response)
  */
 void PetCare_Display_Data(void)
 {
-    // 检查是否是由deepseek_bridge.py发送的命令触发的
-    // 如果是，则不清屏，只更新必要的数据项
-    if(strncmp((char*)USART3_RX_BUF, "+deepseek", 9) == 0 || 
-       strncmp((char*)USART3_RX_BUF, "+deepseek_response", 18) == 0)
-    {
-        // 不执行任何操作，避免清屏
-        return;
-    }
-    
     // 清除整个屏幕
     LCD_Clear(WHITE);
     
@@ -420,10 +411,9 @@ void PetCare_Display_Page(u8 page)
 {
     char buf[50];
     
-    // ��ʾ���⣨����ҳ�涼��ʾ��
+    // 显示标题（所有页面都显示）
     FRONT_COLOR = RED;
-    LCD_ShowString(100, 10, tftlcd_data.width, tftlcd_data.height, 16, "Pet Care System");
-    LCD_ShowString(100, 30, tftlcd_data.width, tftlcd_data.height, 16, "Smart Pet Guardian");
+    LCD_ShowString(100, 20, tftlcd_data.width, tftlcd_data.height, 16, "Smart Doro");
     
     // ����ҳ����ʾ��ͬ����
     switch(page)
@@ -554,13 +544,22 @@ void PetCare_Set_Fan(u8 status)
         pet_care_data.fan_status = DEVICE_OFF;
     }
     
-    // 如果状态变化，则更新风扇状态显�??
+    // 如果状态变化，则更新风扇状态显示
     if(old_status != pet_care_data.fan_status)
     {
-        // 只有在环境数据和设备状态页面才需要更新显�??
+        // 根据当前页面选择更新方式
         if(pet_care_data.current_page == PAGE_ENV_DEVICE)
         {
-            PetCare_Update_Display_Item(3); // 更新风扇状态显�??
+            PetCare_Update_Display_Item(3); // 更新风扇状态显示
+        }
+        else if(pet_care_data.current_page == PAGE_ROLE_STATUS)
+        {
+            // 在角色和状态页面也需要更新风扇状态
+            char buf[50];
+            FRONT_COLOR = BLUE;
+            sprintf(buf, "Fan: %s  ", pet_care_data.fan_status == DEVICE_ON ? "ON" : "OFF");
+            LCD_Fill(10, 150, 200, 166, WHITE);
+            LCD_ShowString(10, 150, 200, 16, 16, (u8*)buf);
         }
     }
 }
@@ -607,13 +606,22 @@ void PetCare_Set_Light(u8 status)
         pet_care_data.light_status = DEVICE_OFF;
     }
     
-    // 如果状态变化，则更新腧明状态显�??
+    // 如果状态变化，则更新照明状态显示
     if(old_status != pet_care_data.light_status)
     {
-        // 只有在环境数据和设备状态页面才需要更新显�??
+        // 根据当前页面选择更新方式
         if(pet_care_data.current_page == PAGE_ENV_DEVICE)
         {
-            PetCare_Update_Display_Item(4); // 更新照明状态显�??
+            PetCare_Update_Display_Item(4); // 更新照明状态显示
+        }
+        else if(pet_care_data.current_page == PAGE_ROLE_STATUS)
+        {
+            // 在角色和状态页面也需要更新照明状态
+            char buf[50];
+            FRONT_COLOR = BLUE;
+            sprintf(buf, "Light: %s  ", pet_care_data.light_status == DEVICE_ON ? "ON" : "OFF");
+            LCD_Fill(10, 180, 200, 196, WHITE);
+            LCD_ShowString(10, 180, 200, 16, 16, (u8*)buf);
         }
     }
 }
@@ -644,13 +652,22 @@ void PetCare_Set_Beep(u8 status)
         pet_care_data.beep_status = DEVICE_OFF;
     }
     
-    // 如果状态变化，则更新蜂鸣器状态显�??
+    // 如果状态变化，则更新蜂鸣器状态显示
     if(old_status != pet_care_data.beep_status)
     {
-        // 只有在环境数据和设备状态页面才需要更新显�??
+        // 根据当前页面选择更新方式
         if(pet_care_data.current_page == PAGE_ENV_DEVICE)
         {
-            PetCare_Update_Display_Item(5); // 更新蜂鸣器状态显�??
+            PetCare_Update_Display_Item(5); // 更新蜂鸣器状态显示
+        }
+        else if(pet_care_data.current_page == PAGE_ROLE_STATUS)
+        {
+            // 在角色和状态页面也需要更新蜂鸣器状态
+            char buf[50];
+            FRONT_COLOR = BLUE;
+            sprintf(buf, "Beep: %s  ", pet_care_data.beep_status == DEVICE_ON ? "ON" : "OFF");
+            LCD_Fill(10, 210, 200, 226, WHITE);
+            LCD_ShowString(10, 210, 200, 16, 16, (u8*)buf);
         }
     }
 }
@@ -675,11 +692,11 @@ void PetCare_Set_Auto_Control(u8 status)
     }
     else if(old_status != status)
     {
-        // 如果是从关闭状态切换到开启状态，则更新自动控制状态显�??
-        // 只有在环境数据和设备状态页面才需要更新显�??
+        // 如果是从关闭状态切换到开启状态，则更新自动控制状态显示
+        // 只有在环境数据和设备状态页面才需要更新显示
         if(pet_care_data.current_page == PAGE_ENV_DEVICE)
         {
-            PetCare_Update_Display_Item(6); // 更新自动控制状态显�??
+            PetCare_Update_Display_Item(6); // 更新自动控制状态显示
         }
     }
 }
@@ -849,7 +866,7 @@ void PetCare_Process_Command_Ex(char* cmd, u8 output_port)
         // DeepSeek查询始终使用UART2发送到电脑，无论output_port参数如何
         u2_printf("DeepSeek Query: %s\r\n", query);
         
-        // 不在LCD上显示查询内容
+        // 不在LCD上显示查询内容，但确保更新当前页面显示
         // LCD_Clear(WHITE);
         // FRONT_COLOR = BLACK;
         // LCD_ShowString(10, 10, 220, 16, 16, "DeepSeek Query:");
@@ -866,6 +883,5 @@ void PetCare_Process_Command_Ex(char* cmd, u8 output_port)
         
         // 不调用PetCare_Process_DeepSeek_Response函数，避免在LCD上显示
         // PetCare_Process_DeepSeek_Response(response);
-        
     }
 }
