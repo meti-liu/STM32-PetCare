@@ -36,7 +36,7 @@
 
 ## ⚙️ 系统功能结构
 
-![839b8d99244a66e531e18cb5982e039](C:\Users\刘博瑞\OneDrive\文档\WeChat Files\wxid_uoowjmo5jhvf12\FileStorage\Temp\839b8d99244a66e531e18cb5982e039.png)
+![系统结构图](img/structure.png)
 
 
 
