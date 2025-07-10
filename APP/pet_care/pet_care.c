@@ -11,7 +11,7 @@
 PetCare_TypeDef pet_care_data;
 
 /**
- * @brief 初始化宠物照护系统
+ * @brief 初始化宠物照护系�??
  */
 void PetCare_Init(void)
 {
@@ -34,7 +34,7 @@ void PetCare_Init(void)
     RGB_LED_Init();
     RGB_LED_Clear();
     
-    // 初始化系统参数
+    // 初始化系统参�??
     pet_care_data.temperature = 25.0;
     pet_care_data.humidity = 50;
     pet_care_data.light_value = 50;
@@ -42,10 +42,10 @@ void PetCare_Init(void)
     pet_care_data.fan_status = DEVICE_OFF;
     pet_care_data.light_status = DEVICE_OFF;
     pet_care_data.beep_status = DEVICE_OFF;
-    pet_care_data.auto_control = DEVICE_ON; // 默认开启自动控制
-    pet_care_data.current_page = PAGE_ROLE_STATUS; // 默认显示角色和状态页面
+    pet_care_data.auto_control = DEVICE_ON; // 默认开启自动控�??
+    pet_care_data.current_page = PAGE_ROLE_STATUS; // 默认显示角色和状态页�??
     
-    // 关闭所有设�??
+    // 关闭所有设�????
     PetCare_Set_Fan(DEVICE_OFF);
     PetCare_Set_Light(DEVICE_OFF);
     PetCare_Set_Beep(DEVICE_OFF);
@@ -58,13 +58,13 @@ void PetCare_Init(void)
  */
 void PetCare_Update_Data(void)
 {
-    // 保存旧数据用于比较
+    // 保存旧数据用于比�??
     float old_temperature = pet_care_data.temperature;
     u8 old_humidity = pet_care_data.humidity;
     u8 old_light_value = pet_care_data.light_value;
     u8 old_system_status = pet_care_data.system_status;
     
-    // 读取温湿度
+    // 读取温湿�??
     u8 temperature = 0;
     u8 humidity = 0;
     if(DHT11_Read_Data(&temperature, &humidity) == 0) // 读取成功
@@ -75,12 +75,12 @@ void PetCare_Update_Data(void)
         // 添加调试信息
         printf("Temperature: %.1f, Humidity: %d%%\r\n", pet_care_data.temperature, pet_care_data.humidity);
         
-        // 检查温度是否变化，如果变化则更新温度显示
+        // 检查温度是否变化，如果变化则更新温度显�??
         if(pet_care_data.temperature != old_temperature)
         {
             PetCare_Update_Display_Item(0); // 更新温度显示
             
-            // 如果当前是图片页面，且温度变化可能导致图片变化，则更新图片显示
+            // 如果当前是图片页面，且温度变化可能导致图片变化，则更新图片显�??
             if(pet_care_data.current_page == PAGE_PICTURE && 
               ((old_temperature < 28.0 && pet_care_data.temperature >= 28.0) || 
                (old_temperature >= 28.0 && pet_care_data.temperature < 28.0)))
@@ -90,25 +90,25 @@ void PetCare_Update_Data(void)
             }
         }
         
-        // 检查湿度是否变化，如果变化则更新湿度显示
+        // 检查湿度是否变化，如果变化则更新湿度显�??
         if(pet_care_data.humidity != old_humidity)
         {
             PetCare_Update_Display_Item(1); // 更新湿度显示
         }
     }
     
-    // 读取光照值
+    // 读取光照�??
     pet_care_data.light_value = Lsens_Get_Val();
     
     // 添加调试信息
     printf("Light value: %d\r\n", pet_care_data.light_value);
     
-    // 检查光照值是否变化，如果变化则更新光照显示
+    // 检查光照值是否变化，如果变化则更新光照显�??
     if(pet_care_data.light_value != old_light_value)
     {
         PetCare_Update_Display_Item(2); // 更新光照显示
         
-        // 如果当前是图片页面，且光照值变化可能导致图片变化，则更新图片显示
+        // 如果当前是图片页面，且光照值变化可能导致图片变化，则更新图片显�??
         if(pet_care_data.current_page == PAGE_PICTURE && 
            ((old_light_value <= 40 && pet_care_data.light_value > 40) || 
             (old_light_value > 40 && pet_care_data.light_value <= 40)))
@@ -118,7 +118,7 @@ void PetCare_Update_Data(void)
         }
     }
     
-    // 更新系统状态
+    // 更新系统状�?
     if(pet_care_data.temperature >= TEMP_ALARM_HIGH || 
        pet_care_data.temperature <= TEMP_ALARM_LOW || 
        pet_care_data.light_value <= LIGHT_ALARM_LOW)
@@ -136,10 +136,10 @@ void PetCare_Update_Data(void)
         pet_care_data.system_status = PET_CARE_NORMAL;
     }
     
-    // 检查系统状态是否变化，如果变化则更新系统状态显示
+    // 检查系统状态是否变化，如果变化则更新系统状态显�??
     if(pet_care_data.system_status != old_system_status)
     {
-        PetCare_Update_Display_Item(7); // 更新系统状态显示
+        PetCare_Update_Display_Item(7); // 更新系统状态显�??
     }
     
     // 打印调试信息
@@ -158,7 +158,7 @@ void PetCare_Auto_Control(void)
     // 温度控制 - 风扇
     u8 speed = 50; // 默认速度50%
 		
-		// 只有在自动控制模式下才执�??
+		// 只有在自动控制模式下才执�????
     if(pet_care_data.auto_control != DEVICE_ON)
     {
         return;
@@ -168,13 +168,13 @@ void PetCare_Auto_Control(void)
     
     if(pet_care_data.temperature >= TEMP_WARNING_HIGH)
     {
-        // 温度过高，开启风�??
+        // 温度过高，开启风�????
         PetCare_Set_Fan(DEVICE_ON);
         
         // 根据温度调整风扇速度
         if(pet_care_data.temperature >= TEMP_ALARM_HIGH)
         {
-            speed = 100; // 温度过高，全速运�??
+            speed = 100; // 温度过高，全速运�????
         }
         else
         {
@@ -187,23 +187,23 @@ void PetCare_Auto_Control(void)
     }
     else
     {
-        // 温度正常，关闭风�??
+        // 温度正常，关闭风�????
         PetCare_Set_Fan(DEVICE_OFF);
     }
     
-    // 光照控制 - RGB�??
+    // 光照控制 - RGB�????
     if(pet_care_data.light_value <= LIGHT_WARNING_LOW)
     {
-        // 光照不足，开启照�??
+        // 光照不足，开启照�????
         PetCare_Set_Light(DEVICE_ON);
     }
     else
     {
-        // 光照充足，关闭照�??
+        // 光照充足，关闭照�????
         PetCare_Set_Light(DEVICE_OFF);
     }
     
-    // 报警控制 - 蜂鸣�??
+    // 报警控制 - 蜂鸣�????
     if(pet_care_data.system_status == PET_CARE_ALARM)
     {
         // 报警状态，开启蜂鸣器
@@ -211,7 +211,7 @@ void PetCare_Auto_Control(void)
     }
     else
     {
-        // 非报警状态，关闭蜂鸣�??
+        // 非报警状态，关闭蜂鸣�????
         PetCare_Set_Beep(DEVICE_OFF);
     }
 }
@@ -237,10 +237,10 @@ void PetCare_Update_Display_Item(u8 data_type)
 {
     char buf[50];
     
-    // 根据当前页面和数据类型更新特定区域
+    // 根据当前页面和数据类型更新特定区�??
     switch(pet_care_data.current_page)
     {
-        case PAGE_ENV_DEVICE: // 环境数据和设备状态页面
+        case PAGE_ENV_DEVICE: // 环境数据和设备状态页�??
             switch(data_type)
             {
                 case 0: // 温度
@@ -248,7 +248,7 @@ void PetCare_Update_Display_Item(u8 data_type)
                     sprintf(buf, "Temperature: %.1f C  ", pet_care_data.temperature);
                     // 先用背景色清除该区域
                     LCD_Fill(10, 60, 200, 76, WHITE);
-                    // 显示新数据
+                    // 显示新数�??
                     LCD_ShowString(10, 60, 200, 16, 16, (u8*)buf);
                     break;
                     
@@ -266,28 +266,28 @@ void PetCare_Update_Display_Item(u8 data_type)
                     LCD_ShowString(10, 120, 200, 16, 16, (u8*)buf);
                     break;
                     
-                case 3: // 风扇状态
+                case 3: // 风扇状�?
                     FRONT_COLOR = BLUE;
                     sprintf(buf, "Fan: %s  ", pet_care_data.fan_status == DEVICE_ON ? "ON" : "OFF");
                     LCD_Fill(10, 150, 200, 166, WHITE);
                     LCD_ShowString(10, 150, 200, 16, 16, (u8*)buf);
                     break;
                     
-                case 4: // 照明状态
+                case 4: // 照明状�?
                     FRONT_COLOR = BLUE;
                     sprintf(buf, "Light: %s  ", pet_care_data.light_status == DEVICE_ON ? "ON" : "OFF");
                     LCD_Fill(10, 180, 200, 196, WHITE);
                     LCD_ShowString(10, 180, 200, 16, 16, (u8*)buf);
                     break;
                     
-                case 5: // 蜂鸣器状态
+                case 5: // 蜂鸣器状�??
                     FRONT_COLOR = BLUE;
                     sprintf(buf, "Beep: %s  ", pet_care_data.beep_status == DEVICE_ON ? "ON" : "OFF");
                     LCD_Fill(10, 210, 200, 226, WHITE);
                     LCD_ShowString(10, 210, 200, 16, 16, (u8*)buf);
                     break;
                     
-                case 6: // 自动控制状态
+                case 6: // 自动控制状�?
                     FRONT_COLOR = BLUE;
                     sprintf(buf, "Auto: %s  ", pet_care_data.auto_control == DEVICE_ON ? "ON" : "OFF");
                     LCD_Fill(10, 240, 200, 256, WHITE);
@@ -299,13 +299,13 @@ void PetCare_Update_Display_Item(u8 data_type)
             }
             break;
             
-        case PAGE_ROLE_STATUS: // 角色和状态页面
-            if(data_type == 7) // 系统状态
+        case PAGE_ROLE_STATUS: // 角色和状态页�??
+            if(data_type == 7) // 系统状�?
             {
-                // 清除系统状态区域
+                // 清除系统状态区�??
                 LCD_Fill(10, 60, 200, 76, WHITE);
                 
-                // 显示系统状态
+                // 显示系统状�?
                 switch(pet_care_data.system_status)
                 {
                     case PET_CARE_NORMAL:
@@ -336,10 +336,10 @@ void PetCare_Update_Display_Item(u8 data_type)
  */
 void PetCare_Switch_Page(void)
 {
-    // 切换到下一页
+    // 切换到下一�??
     pet_care_data.current_page = (pet_care_data.current_page + 1) % PAGE_MAX;
     
-    // 显示新页面
+    // 显示新页�??
     PetCare_Display_Data();
 }
 
@@ -350,17 +350,17 @@ void PetCare_Display_Page(u8 page)
 {
     char buf[50];
     
-    // 显示标题（所有页面都显示）
+    // ��ʾ���⣨����ҳ�涼��ʾ��
     FRONT_COLOR = RED;
-    LCD_ShowString(10, 10, tftlcd_data.width, tftlcd_data.height, 16, "Pet Care System");
-    LCD_ShowString(10, 30, tftlcd_data.width, tftlcd_data.height, 16, "Smart Pet Guardian");
+    LCD_ShowString(100, 10, tftlcd_data.width, tftlcd_data.height, 16, "Pet Care System");
+    LCD_ShowString(100, 30, tftlcd_data.width, tftlcd_data.height, 16, "Smart Pet Guardian");
     
-    // 根据页面显示不同内容
+    // ����ҳ����ʾ��ͬ����
     switch(page)
     {
-        case PAGE_ROLE_STATUS: // 角色和状态页面
+        case PAGE_ROLE_STATUS: // ϵͳ״̬���豸״̬ҳ��
             FRONT_COLOR = BLUE;
-            // 显示系统状态
+            // ��ʾϵͳ״̬
             switch(pet_care_data.system_status)
             {
                 case PET_CARE_NORMAL:
@@ -379,9 +379,8 @@ void PetCare_Display_Page(u8 page)
                     break;
             }
             
-            // 显示蓝牙角色和状态
+            // ��ʾ����״̬
             FRONT_COLOR = BLUE;
-            // 显示蓝牙角色
             if(HC05_Get_Role() == 1)
             {
                 LCD_ShowString(10, 90, 200, 16, 16, "ROLE: Master");
@@ -391,7 +390,6 @@ void PetCare_Display_Page(u8 page)
                 LCD_ShowString(10, 90, 200, 16, 16, "ROLE: Slave ");
             }
             
-            // 显示蓝牙状态
             if(HC05_LED)
             {
                 LCD_ShowString(10, 120, 200, 16, 16, "STA: Connected ");
@@ -400,24 +398,8 @@ void PetCare_Display_Page(u8 page)
             {
                 LCD_ShowString(10, 120, 200, 16, 16, "STA: Disconnect");
             }
-            break;
-            
-        case PAGE_ENV_DEVICE: // 环境数据和设备状态页面
-            FRONT_COLOR = BLUE;
-            
-            // 显示温度
-            sprintf(buf, "Temperature: %.1f C  ", pet_care_data.temperature);
-            LCD_ShowString(10, 60, 200, 16, 16, (u8*)buf);
-            
-            // 显示湿度
-            sprintf(buf, "Humidity: %d%%  ", pet_care_data.humidity);
-            LCD_ShowString(10, 90, 200, 16, 16, (u8*)buf);
-            
-            // 显示光照
-            sprintf(buf, "Light: %d%%  ", pet_care_data.light_value);
-            LCD_ShowString(10, 120, 200, 16, 16, (u8*)buf);
-            
-            // 显示设备状态
+
+            // ��ʾ�豸״̬
             sprintf(buf, "Fan: %s  ", pet_care_data.fan_status == DEVICE_ON ? "ON" : "OFF");
             LCD_ShowString(10, 150, 200, 16, 16, (u8*)buf);
             
@@ -431,30 +413,46 @@ void PetCare_Display_Page(u8 page)
             LCD_ShowString(10, 240, 200, 16, 16, (u8*)buf);
             break;
             
-        case PAGE_PICTURE: // 图片页面
+        case PAGE_ENV_DEVICE: // ��������ҳ��
+            FRONT_COLOR = BLUE;
+            
+            // ��ʾ�¶�
+            sprintf(buf, "Temperature: %.1f C  ", pet_care_data.temperature);
+            LCD_ShowString(10, 60, 200, 16, 16, (u8*)buf);
+            
+            // ��ʾʪ��
+            sprintf(buf, "Humidity: %d%%  ", pet_care_data.humidity);
+            LCD_ShowString(10, 90, 200, 16, 16, (u8*)buf);
+            
+            // ��ʾ����
+            sprintf(buf, "Light: %d%%  ", pet_care_data.light_value);
+            LCD_ShowString(10, 120, 200, 16, 16, (u8*)buf);
+            break;
+            
+        case PAGE_PICTURE: // ͼƬҳ�汣�ֲ���
             FRONT_COLOR = BLUE;
             LCD_ShowString(10, 60, 200, 16, 16, "Pet Picture:");
             
             // 添加调试信息
             printf("Display Page - Light: %d, Temperature: %.1f\r\n", pet_care_data.light_value, pet_care_data.temperature);
             
-            // 清除之前的图片区域
+            // 清除之前的图片区�??
             BACK_COLOR = WHITE;
             LCD_Fill(10, 100, tftlcd_data.width-10, 250, WHITE);
             
             // 根据温度和光照条件显示不同的图片
-            if(pet_care_data.light_value > 40) {
-                // 光照高于40时显示unhappy的图片
+            if(pet_care_data.light_value > 80) {
+                // 光照高于40时显示unhappy的图�??
                 printf("Showing unhappy picture due to high light (%d)\r\n", pet_care_data.light_value);
                 LCD_ShowString(10, 80, 200, 16, 16, "Pet is unhappy due to high light!");
                 LCD_ShowPicture((tftlcd_data.width - 200) / 2, 100, 200, 151, (u8*)gImage_doro_unhappy);
             } else if(pet_care_data.temperature >= 28.0) {
-                // 温度高于28度时显示hot的图片
+                // 温度高于28度时显示hot的图�??
                 printf("Showing hot picture due to high temperature (%.1f)\r\n", pet_care_data.temperature);
-                LCD_ShowString(10, 80, 200, 16, 16, "Pet is hot due to high temperature!");
+                LCD_ShowString(10, 80, 300, 16, 16, "Pet is hot due to high temperature!");
                 LCD_ShowPicture((tftlcd_data.width - 96) / 2, 100, 96, 100, (u8*)gImage_doro_hot);
             } else {
-                // 温度和光照都正常时显示普通图片
+                // 温度和光照都正常时显示普通图�??
                 printf("Showing normal picture (Temp: %.1f, Light: %d)\r\n", pet_care_data.temperature, pet_care_data.light_value);
                 LCD_ShowString(10, 80, 200, 16, 16, "Pet is comfortable!");
                 LCD_ShowPicture((tftlcd_data.width - 100) / 2, 100, 100, 91, (u8*)gImage_doro2);
@@ -472,7 +470,7 @@ void PetCare_Display_Page(u8 page)
  */
 void PetCare_Set_Fan(u8 status)
 {
-    // 检查状态是否变化
+    // 检查状态是否变�??
     u8 old_status = pet_care_data.fan_status;
     
     if(status == DEVICE_ON)
@@ -486,13 +484,13 @@ void PetCare_Set_Fan(u8 status)
         pet_care_data.fan_status = DEVICE_OFF;
     }
     
-    // 如果状态变化，则更新风扇状态显示
+    // 如果状态变化，则更新风扇状态显�??
     if(old_status != pet_care_data.fan_status)
     {
-        // 只有在环境数据和设备状态页面才需要更新显示
+        // 只有在环境数据和设备状态页面才需要更新显�??
         if(pet_care_data.current_page == PAGE_ENV_DEVICE)
         {
-            PetCare_Update_Display_Item(3); // 更新风扇状态显示
+            PetCare_Update_Display_Item(3); // 更新风扇状态显�??
         }
     }
 }
@@ -505,7 +503,7 @@ void PetCare_Set_Fan(u8 status)
 {
     if(status == DEVICE_ON)
     {
-        // 开启白色照�??
+        // 开启白色照�????
         u8 i, j;
         for(i=0; i<RGB_LED_YHIGH; i++)
         {
@@ -525,7 +523,7 @@ void PetCare_Set_Fan(u8 status)
 
 void PetCare_Set_Light(u8 status)
 {
-    // 检查状态是否变化
+    // 检查状态是否变�??
     u8 old_status = pet_care_data.light_status;
     
     if(status == DEVICE_ON)
@@ -556,13 +554,13 @@ void PetCare_Set_Light(u8 status)
         pet_care_data.light_status = DEVICE_OFF;
     }
     
-    // 如果状态变化，则更新照明状态显示
+    // 如果状态变化，则更新腧明状态显�??
     if(old_status != pet_care_data.light_status)
     {
-        // 只有在环境数据和设备状态页面才需要更新显示
+        // 只有在环境数据和设备状态页面才需要更新显�??
         if(pet_care_data.current_page == PAGE_ENV_DEVICE)
         {
-            PetCare_Update_Display_Item(4); // 更新照明状态显示
+            PetCare_Update_Display_Item(4); // 更新照明状态显�??
         }
     }
 }
@@ -574,12 +572,12 @@ void PetCare_Set_Light(u8 status)
 
 
 /**
- * @brief 设置蜂鸣器状�??
+ * @brief 设置蜂鸣器状�????
  * @param status: DEVICE_ON/DEVICE_OFF
  */
 void PetCare_Set_Beep(u8 status)
 {
-    // 检查状态是否变化
+    // 检查状态是否变�??
     u8 old_status = pet_care_data.beep_status;
     
     if(status == DEVICE_ON)
@@ -589,17 +587,17 @@ void PetCare_Set_Beep(u8 status)
     }
     else
     {
-        BEEP = 0; // 关闭蜂鸣器
+        BEEP = 0; // 关闭蜂鸣�??
         pet_care_data.beep_status = DEVICE_OFF;
     }
     
-    // 如果状态变化，则更新蜂鸣器状态显示
+    // 如果状态变化，则更新蜂鸣器状态显�??
     if(old_status != pet_care_data.beep_status)
     {
-        // 只有在环境数据和设备状态页面才需要更新显示
+        // 只有在环境数据和设备状态页面才需要更新显�??
         if(pet_care_data.current_page == PAGE_ENV_DEVICE)
         {
-            PetCare_Update_Display_Item(5); // 更新蜂鸣器状态显示
+            PetCare_Update_Display_Item(5); // 更新蜂鸣器状态显�??
         }
     }
 }
@@ -610,32 +608,32 @@ void PetCare_Set_Beep(u8 status)
  */
 void PetCare_Set_Auto_Control(u8 status)
 {
-    // 检查状态是否变化
+    // 检查状态是否变�??
     u8 old_status = pet_care_data.auto_control;
     
     pet_care_data.auto_control = status;
     
     if(status != DEVICE_ON)
     {
-        // 关闭自动控制时，默认关闭所有设备
+        // 关闭自动控制时，默认关闭所有设�??
         PetCare_Set_Fan(DEVICE_OFF);
         PetCare_Set_Light(DEVICE_OFF);
         PetCare_Set_Beep(DEVICE_OFF);
     }
     else if(old_status != status)
     {
-        // 如果是从关闭状态切换到开启状态，则更新自动控制状态显示
-        // 只有在环境数据和设备状态页面才需要更新显示
+        // 如果是从关闭状态切换到开启状态，则更新自动控制状态显�??
+        // 只有在环境数据和设备状态页面才需要更新显�??
         if(pet_care_data.current_page == PAGE_ENV_DEVICE)
         {
-            PetCare_Update_Display_Item(6); // 更新自动控制状态显示
+            PetCare_Update_Display_Item(6); // 更新自动控制状态显�??
         }
     }
 }
 
 /**
  * @brief 处理蓝牙命令
- * @param cmd: 命令字符�??
+ * @param cmd: 命令字符�????
  */
 void PetCare_Process_Command(char* cmd)
 {
@@ -669,7 +667,7 @@ void PetCare_Process_Command(char* cmd)
         printf("Light turned OFF\r\n");
     }
     
-    // 蜂鸣器控制命�??
+    // 蜂鸣器控制命�????
     else if(strcmp(cmd, "+BEEP ON\r\n") == 0)
     {
         PetCare_Set_Auto_Control(DEVICE_OFF); // 关闭自动控制
@@ -695,7 +693,7 @@ void PetCare_Process_Command(char* cmd)
         printf("Auto control turned OFF\r\n");
     }
     
-    // 查询状态命�??
+    // 查询状态命�????
     else if(strcmp(cmd, "+STATUS?\r\n") == 0)
     {
         printf("Temperature: %.1f C\r\n", pet_care_data.temperature);
@@ -706,6 +704,12 @@ void PetCare_Process_Command(char* cmd)
         printf("Light: %s\r\n", pet_care_data.light_status == DEVICE_ON ? "ON" : "OFF");
         printf("Beep: %s\r\n", pet_care_data.beep_status == DEVICE_ON ? "ON" : "OFF");
         printf("Auto Control: %s\r\n", pet_care_data.auto_control == DEVICE_ON ? "ON" : "OFF");
+    }else if(strcmp(cmd,"+page turn left\r\n") == 0)
+    {
+        pet_care_data.current_page  = (pet_care_data.current_page+1)%3;
+    }else if(strcmp(cmd,"+page turn right\r\n") == 0)
+    {
+        pet_care_data.current_page = (pet_care_data.current_page+3-1)%3;
     }
 
     if(strcmp(cmd,"+music on\r\n")==0)

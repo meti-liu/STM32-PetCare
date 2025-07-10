@@ -168,7 +168,7 @@ void RGB_DrawDotColor(u8 x,u8 y,u8 status,u32 color)
 	u8 i=0;
 	u8 j=0;
 	
-	//RGB_LED_Clear();
+	RGB_LED_Clear();
 	if(status)
 	{
 		g_rgb_databuf[0][x][y]=color>>16;//r
